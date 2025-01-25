@@ -1,0 +1,138 @@
+.container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .heading {
+    color: #2d3436;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #4CAF50;
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .item {
+    margin: 0;
+    padding: 1.25rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #eee;
+  }
+
+  .item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: #4CAF5030;
+  }
+
+  .details {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+
+  .meta {
+    color: #7f8c8d;
+    margin-left: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .loadButton {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .loadButton:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+  }
+
+  .deleteButton {
+    padding: 0.5rem 1rem;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .deleteButton:hover {
+    background-color: #e53935;
+    transform: translateY(-1px);
+  }
+
+  /* Add empty state styling */
+  .list:empty::after {
+    content: "No exercises found. Create your first one!";
+    color: #95a5a6;
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .item {
+      padding: 1rem;
+    }
+
+    .actions {
+      flex-direction: column;
+    }
+
+    .loadButton,
+    .deleteButton {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Add focus states for accessibility */
+  .loadButton:focus-visible,
+  .deleteButton:focus-visible {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+  }
+
+  .deleteButton:focus-visible {
+    outline-color: #ff4444;
+  }

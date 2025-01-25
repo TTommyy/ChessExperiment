@@ -4,6 +4,90 @@ import { Chess } from 'chess.js';
 import axios from 'axios';
 
 const initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+const styles = {
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '20px',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+  },
+  header: {
+    marginBottom: '30px',
+    display: 'flex',
+    gap: '10px',
+    flexWrap: 'wrap'
+  },
+  button: {
+    padding: '8px 16px',
+    borderRadius: '4px',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontWeight: '600'
+  },
+  primaryButton: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    ':hover': {
+      backgroundColor: '#45a049'
+    }
+  },
+  dangerButton: {
+    backgroundColor: '#ff4444',
+    color: 'white',
+    ':hover': {
+      backgroundColor: '#cc0000'
+    }
+  },
+  modeButton: (active) => ({
+    backgroundColor: active ? '#4CAF50' : '#e0e0e0',
+    color: active ? 'white' : '#333'
+  }),
+  form: {
+    display: 'flex',
+    gap: '10px',
+    alignItems: 'center',
+    marginTop: '15px',
+    padding: '15px',
+    backgroundColor: '#f5f5f5',
+    borderRadius: '4px'
+  },
+  input: {
+    padding: '8px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+    minWidth: '200px'
+  },
+  select: {
+    padding: '8px',
+    borderRadius: '4px',
+    border: '1px solid #ddd'
+  },
+  exerciseItem: {
+    margin: '10px 0',
+    padding: '15px',
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    transition: 'transform 0.2s',
+    ':hover': {
+      transform: 'translateX(5px)'
+    }
+  },
+  exerciseActions: {
+    marginTop: '10px',
+    display: 'flex',
+    gap: '8px'
+  },
+  chessboardContainer: {
+    margin: '20px auto',
+    padding: '20px',
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+  }
+};
+
 
 function App() {
   const [game, setGame] = useState(new Chess());
@@ -14,6 +98,8 @@ function App() {
   const [startingColor, setStartingColor] = useState('white');
   const [exerciseMoves, setExerciseMoves] = useState([]);
   const [initialExerciseFen, setInitialExerciseFen] = useState('');
+  const [currentExercise, setCurrentExercise] = useState(null);
+  const [currentMoveIndex, setCurrentMoveIndex] = useState(-1);
 
   useEffect(() => {
     axios.get('http://localhost:5001/api/exercises')
@@ -22,6 +108,7 @@ function App() {
   }, []);
 
   function onDrop(sourceSquare, targetSquare, piece) {
+    if (currentExercise) return false;
     const newGame = new Chess(game.fen());
 
     if (mode === 'free') {
@@ -91,14 +178,48 @@ function App() {
     });
   }
 
+  // Update handleLoadExercise
   const handleLoadExercise = (exercise) => {
     try {
-      const newGame = new Chess(exercise.initial_fen);
-      setGame(newGame);
-      alert(`Loaded exercise: ${exercise.motives}\nMoves: ${exercise.moves.join(', ')}`);
+      const game = new Chess(exercise.initial_fen);
+      const positions = [game.fen()];
+
+      // Precompute all positions
+      exercise.moves.forEach(move => {
+        game.move(move);
+        positions.push(game.fen());
+      });
+
+      setCurrentExercise({ ...exercise, positions });
+      setCurrentMoveIndex(0);
+      setGame(new Chess(positions[0]));
     } catch (error) {
       alert('Failed to load exercise: ' + error.message);
     }
+  };
+
+  // Add navigation handlers
+  const handleNextMove = () => {
+    if (currentMoveIndex < currentExercise.positions.length - 1) {
+      const newIndex = currentMoveIndex + 1;
+      setCurrentMoveIndex(newIndex);
+      setGame(new Chess(currentExercise.positions[newIndex]));
+    }
+  };
+
+  const handlePreviousMove = () => {
+    if (currentMoveIndex > 0) {
+      const newIndex = currentMoveIndex - 1;
+      setCurrentMoveIndex(newIndex);
+      setGame(new Chess(currentExercise.positions[newIndex]));
+    }
+  };
+
+  // Add close exercise handler
+  const handleCloseExercise = () => {
+    setCurrentExercise(null);
+    setCurrentMoveIndex(-1);
+    setGame(new Chess());
   };
 
   const handleDeleteExercise = (id) => {
@@ -114,88 +235,154 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ marginBottom: '20px' }}>
-        <button onClick={() => setMode('free')}>Free Mode</button>
-        <button onClick={() => setMode('exercise')}>Exercise Mode</button>
+    <div style={styles.container}>
+      <div style={styles.header}>
+        <button
+          onClick={() => setMode('free')}
+          style={{...styles.button, ...styles.modeButton(mode === 'free')}}
+        >
+          Free Mode
+        </button>
+        <button
+          onClick={() => setMode('exercise')}
+          style={{...styles.button, ...styles.modeButton(mode === 'exercise')}}
+        >
+          Exercise Mode
+        </button>
 
         {mode === 'free' && (
           <>
-            <button onClick={() => setGame(new Chess(initialFen))}>
+            <button
+              onClick={() => setGame(new Chess(initialFen))}
+              style={{...styles.button, backgroundColor: '#2196F3', color: 'white'}}
+            >
               Reset Board
             </button>
-            <button onClick={() => setGame(new Chess('8/8/8/8/8/8/8/8 w - - 0 1'))}>
+            <button
+              onClick={() => setGame(new Chess('8/8/8/8/8/8/8/8 w - - 0 1'))}
+              style={{...styles.button, backgroundColor: '#9E9E9E', color: 'white'}}
+            >
               Clear Board
             </button>
           </>
         )}
 
         {mode === 'exercise' && !creatingExercise && (
-          <form onSubmit={handleNewExercise} style={{ marginTop: '10px' }}>
+          <form onSubmit={handleNewExercise} style={styles.form}>
             <input
               type="text"
-              placeholder="Motives"
+              placeholder="Exercise Motives (e.g., Fork, Pin)"
               value={motives}
               onChange={(e) => setMotives(e.target.value)}
+              style={styles.input}
               required
             />
             <select
               value={startingColor}
               onChange={(e) => setStartingColor(e.target.value)}
+              style={styles.select}
               required
             >
               <option value="white">White starts</option>
               <option value="black">Black starts</option>
             </select>
-            <button type="submit">Start Exercise</button>
+            <button
+              type="submit"
+              style={{...styles.button, ...styles.primaryButton}}
+            >
+              Start Exercise
+            </button>
           </form>
         )}
 
         {creatingExercise && (
-          <button onClick={handleFinishExercise} style={{ marginLeft: '10px' }}>
-            Finish Exercise
+          <button
+            onClick={handleFinishExercise}
+            style={{...styles.button, ...styles.primaryButton}}
+          >
+            ✅ Finish Exercise
           </button>
         )}
       </div>
 
-      <div style={{ width: '560px', margin: 'auto' }}>
+      {currentExercise && (
+        <div style={{
+          margin: '20px 0',
+          padding: '15px',
+          backgroundColor: '#e3f2fd',
+          borderRadius: '8px',
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'center'
+        }}>
+          <div style={{ flexGrow: 1 }}>
+            <h3 style={{ margin: 0 }}>{currentExercise.motives}</h3>
+            <div style={{ color: '#666' }}>
+              Move {currentMoveIndex} of {currentExercise.positions.length - 1}
+            </div>
+          </div>
+
+          <button
+            onClick={handlePreviousMove}
+            disabled={currentMoveIndex === 0}
+            style={{...styles.button, ...styles.primaryButton}}
+          >
+            ◀ Previous
+          </button>
+
+          <button
+            onClick={handleNextMove}
+            disabled={currentMoveIndex === currentExercise.positions.length - 1}
+            style={{...styles.button, ...styles.primaryButton}}
+          >
+            Next ▶
+          </button>
+
+          <button
+            onClick={handleCloseExercise}
+            style={{...styles.button, backgroundColor: '#9E9E9E', color: 'white'}}
+          >
+            Close
+          </button>
+        </div>
+      )}
+
+      <div style={styles.chessboardContainer}>
         <Chessboard
           position={game.fen()}
           onPieceDrop={onDrop}
           boardWidth={560}
           customBoardStyle={{
             borderRadius: '4px',
-            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
           }}
+          customDarkSquareStyle={{ backgroundColor: '#779952' }}
+          customLightSquareStyle={{ backgroundColor: '#edeed1' }}
         />
       </div>
 
-      <div style={{ marginTop: '20px' }}>
-        <h2>Saved Exercises</h2>
-        <ul>
+      <div>
+        <h2 style={{ color: '#333', marginBottom: '15px' }}>Saved Exercises</h2>
+        <ul style={{ listStyle: 'none', padding: 0 }}>
           {exercises.map(ex => (
-            <li key={ex.id} style={{ margin: '10px 0', padding: '5px', borderBottom: '1px solid #ccc' }}>
-              <div>
-                <strong>{ex.motives}</strong> (ID: {ex.id}) -
-                {new Date(ex.created_at).toLocaleString()}
+            <li key={ex.id} style={styles.exerciseItem}>
+              <div style={{ fontSize: '1.1em', marginBottom: '5px' }}>
+                <span style={{ fontWeight: '600' }}>{ex.motives}</span>
+                <span style={{ color: '#666', marginLeft: '10px' }}>
+                  (ID: {ex.id}) - {new Date(ex.created_at).toLocaleString()}
+                </span>
               </div>
-              <div style={{ marginTop: '5px' }}>
+              <div style={styles.exerciseActions}>
                 <button
                   onClick={() => handleLoadExercise(ex)}
-                  style={{ marginRight: '5px', padding: '2px 10px' }}
+                  style={{...styles.button, ...styles.primaryButton}}
                 >
-                  Load
+                  📖 Load Exercise
                 </button>
                 <button
                   onClick={() => handleDeleteExercise(ex.id)}
-                  style={{
-                    padding: '2px 10px',
-                    backgroundColor: '#ff4444',
-                    color: 'white',
-                    border: 'none'
-                  }}
+                  style={{...styles.button, ...styles.dangerButton}}
                 >
-                  Delete
+                  🗑️ Delete
                 </button>
               </div>
             </li>

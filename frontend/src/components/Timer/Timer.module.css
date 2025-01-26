@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+  /* Updated Colors */
+  --timer-bg-color: rgba(255, 255, 255, 0.95);
+  --timer-border-color: rgba(255, 255, 255, 0.2);
+  --timer-progress-bg: rgba(77, 127, 255, 0.1);
+  --timer-bar-color: linear-gradient(135deg, #4d7fff, #3d64db);
+  --timer-text-color: #2c3e50;
+  --timer-low-color: #d73a49;
+
+  /* Updated Spacing */
+  --timer-border-radius: 12px;
+  --timer-padding: 1.5rem;
+}
+
+.timer {
+  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  max-width: 320px;
+  background: var(--timer-bg-color);
+  border-radius: var(--timer-border-radius);
+  padding: var(--timer-padding);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin: 1rem auto;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--timer-border-color);
+  transition: all 0.3s ease;
+}
+
+.timer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.timerProgress {
+  position: relative;
+  height: 8px;
+  background: var(--timer-progress-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timerBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--timer-bar-color);
+  transform-origin: left center;
+  transition: transform 0.5s linear;
+}
+
+/* Animated shine effect */
+.timerBar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.timerText {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--timer-text-color);
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+/* Low time warning animation */
+.timerText.lowTime {
+  animation: pulse 1s infinite alternate;
+  color: var(--timer-low-color);
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timer {
+    max-width: 100%;
+    margin: 1rem 0;
+    padding: 1.2rem;
+  }
+
+  .timerText {
+    font-size: 1.2rem;
+  }
+}

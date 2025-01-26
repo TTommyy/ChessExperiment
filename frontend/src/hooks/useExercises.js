@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchExercises, createExercise, deleteExercise } from '../api/exercises';
+import { fetchExercises, createExercise, deleteExercise} from '../api/exercises';
 
 const useExercises = () => {
   const [exercises, setExercises] = useState([]);

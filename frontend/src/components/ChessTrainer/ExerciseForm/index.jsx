@@ -2,14 +2,18 @@ import styles from './ExerciseForm.module.css';
 
 const ExerciseForm = ({ motives, startingColor, onMotivesChange, onStartingColorChange, onSubmit }) => (
   <form onSubmit={onSubmit} className={styles.form}>
-    <input
-      type="text"
-      placeholder="Exercise Motives (e.g., Fork, Pin)"
+    <select
       value={motives}
       onChange={(e) => onMotivesChange(e.target.value)}
       className={styles.input}
       required
-    />
+      defaultValue={'Pin'}
+      >
+        <option value="Pin">Pin</option>
+        <option value="Fork">Fork</option>
+        <option value="Undermining">Undermining</option>
+      </select>
+
     <select
       value={startingColor}
       onChange={(e) => onStartingColorChange(e.target.value)}

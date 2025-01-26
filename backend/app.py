@@ -4,6 +4,8 @@ from flask_cors import CORS
 import chess
 import chess.pgn
 from datetime import datetime
+import random
+import heapq
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exercises.db'
@@ -69,6 +71,82 @@ def delete_exercise(exercise_id):
     db.session.commit()
     return jsonify({'message': 'Exercise deleted successfully'}), 200
 
+@app.route('/api/exercises/sequence', methods=['GET'])
+def get_puzzle_sequence():
+    exercises = Exercise.query.all()
+
+    # Convert each puzzle row into a dictionary
+    all_puzzles = []
+    for ex in exercises:
+        all_puzzles.append({
+            'id': ex.id,
+            'initial_fen': ex.initial_fen,
+            'moves': ex.moves,
+            'starting_color': ex.starting_color,
+            'motives': ex.motives
+        })
+
+
+    grouped = {}
+    for puzzle in all_puzzles:
+        motive = puzzle['motives']
+        grouped.setdefault(motive, []).append(puzzle)
+
+    for motive in grouped:
+        grouped[motive].sort(key=lambda x: x['id'])
+
+
+    ordered_list = []
+    for motive in sorted(grouped.keys()):
+        ordered_list.extend(grouped[motive])
+
+    ordered_list = ordered_list[:21]
+
+    for motive in grouped:
+        random.shuffle(grouped[motive])
+
+    heap = []
+    for motive, puzzles in grouped.items():
+        count = len(puzzles)
+        if count > 0:
+            # Push (negative_count, motive)
+            heapq.heappush(heap, (-count, motive))
+
+    random_list = []
+    prev_motive = None
+    while heap and len(random_list) < 21:
+        count1, motive1 = heapq.heappop(heap)
+        count1 = -count1
+
+        if motive1 == prev_motive:
+            if not heap:
+                break
+
+            count2, motive2 = heapq.heappop(heap)
+            count2 = -count2
+            puzzle = grouped[motive2].pop()
+            random_list.append(puzzle)
+            prev_motive = motive2
+            count2 -= 1  # used one puzzle
+
+            if count2 > 0:
+                heapq.heappush(heap, ( -count2, motive2 ))
+
+            heapq.heappush(heap, (-count1, motive1))
+        else:
+            puzzle = grouped[motive1].pop()
+            random_list.append(puzzle)
+            prev_motive = motive1
+            count1 -= 1
+
+            if count1 > 0:
+                heapq.heappush(heap, (-count1, motive1))
+
+
+    return jsonify({
+        'ordered': ordered_list,    # up to 21 puzzles, grouped by motive
+        'random': random_list       # up to 21, no two consecutive same motive
+    })
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

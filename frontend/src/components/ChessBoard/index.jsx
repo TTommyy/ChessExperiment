@@ -1,28 +1,33 @@
+import React from 'react';
 import { Chessboard } from 'react-chessboard';
+import styles from './ChessBoard.module.css';
 
-const ChessBoard = ({ game, onDrop }) => {
-  const customStyles = {
-    borderRadius: '4px',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
-  };
-
+function ChessBoard({
+  game,
+  position,
+  onDrop,
+  boardOrientation = 'white',
+  boardWidth = 600,
+}) {
   return (
-    <div style={{
-      margin: '20px auto',
-      padding: '20px',
-      backgroundColor: '#fff',
-      borderRadius: '8px'
-    }}>
+    <div className={styles.chessBoardContainer}>
       <Chessboard
-        position={game.fen()}
+        position={position || game?.fen() || 'start'}
         onPieceDrop={onDrop}
-        boardWidth={560}
-        customBoardStyle={customStyles}
+        boardOrientation={boardOrientation}
+        boardWidth={boardWidth}
         customDarkSquareStyle={{ backgroundColor: '#779952' }}
         customLightSquareStyle={{ backgroundColor: '#edeed1' }}
+        customBoardStyle={{
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+        }}
+        arePiecesDraggable={true}
+        arePremovesAllowed={false}
+        snapToCursor={false} // Ensures the piece follows the cursor smoothly
       />
     </div>
   );
-};
+}
 
 export default ChessBoard;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5001/api/exercises';
+const API_URL = 'http://20.63.17.189:5001/api/exercises';
 
 export const fetchExercises = () => axios.get(API_URL);
 export const createExercise = (exercise) => axios.post(API_URL, exercise);

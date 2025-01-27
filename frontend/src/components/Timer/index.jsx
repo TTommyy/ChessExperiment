@@ -9,39 +9,44 @@ function Timer({ initialTime, onTimeUp, isRunning }) {
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
-        // If time runs out, clear interval and trigger callback
-        if (prev <= 1) {
+        const next = prev - 1;
+        if (next <= 0) {
           clearInterval(interval);
           onTimeUp();
           return 0;
         }
-        return prev - 1;
+        return next;
       });
     }, 1000);
 
-    // Cleanup on unmount or if isRunning changes
     return () => clearInterval(interval);
   }, [isRunning, onTimeUp]);
 
-  // Convert seconds into mm:ss format
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  // Calculate bar width as a percentage
-  const barWidth = (timeLeft / initialTime) * 100;
+  const barScale = timeLeft / initialTime;
+  const isLowTime = timeLeft <= 30;
 
   return (
     <div className={styles.timer}>
       <div className={styles.timerProgress}>
         <div
           className={styles.timerBar}
-          style={{ width: `${barWidth}%` }}
+          style={{ transform: `scaleX(${barScale})` }}
         />
       </div>
-      <div className={styles.timerText}>{formatTime(timeLeft)}</div>
+
+      <div
+        className={
+          isLowTime ? `${styles.timerText} ${styles.lowTime}` : styles.timerText
+        }
+      >
+        {formatTime(timeLeft)}
+      </div>
     </div>
   );
 }

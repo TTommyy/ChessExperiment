@@ -7,21 +7,37 @@ import styles from './PuzzleSolver.module.css';
 
 const initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
+const SOLUTION_MOVE_DELAY = 3000;
+
 function PuzzleSolver(mode) {
   const [game, setGame] = useState(new Chess(initialFen));
   const [puzzles, setPuzzles] = useState([]);
   const [currentPuzzle, setCurrentPuzzle] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const [isSolved, setIsSolved] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
+
+  // Tracks which move user is supposed to play next
   const [moveIndex, setMoveIndex] = useState(0);
+
+  // For showing the solution in an animated, move-by-move style
   const [showSolution, setShowSolution] = useState(false);
+  const [replayIndex, setReplayIndex] = useState(0);
+
+  // NEW: Store an error message to display when user attempts an illegal move
+  const [errorMessage, setErrorMessage] = useState('');
+  const [animateError, setAnimateError] = useState(false); // NEW: Trigger for animation
 
   useEffect(() => {
     const fetchPuzzles = async () => {
       try {
         const response = await getPuzzleSequence();
-        setPuzzles(mode === 'ordered' ? response.data.ordered : response.data.random);
+        if (mode === 'ordered') {
+          setPuzzles(response.data.ordered);
+        } else {
+          setPuzzles(response.data.random);
+        }
       } catch (error) {
         console.error('Error fetching puzzles:', error);
       }
@@ -45,6 +61,9 @@ function PuzzleSolver(mode) {
     setIsFailed(false);
     setMoveIndex(0);
     setShowSolution(false);
+    setReplayIndex(0);
+    setErrorMessage(''); // Clear any prior error
+    setAnimateError(false); // Reset animation trigger
   };
 
   const handleMove = useCallback(
@@ -52,23 +71,37 @@ function PuzzleSolver(mode) {
       if (isSolved || isFailed) return false;
 
       const newGame = new Chess(game.fen());
-      const userMove = newGame.move({
-        from: sourceSquare,
-        to: targetSquare,
-      });
-
-      if (!userMove) {
-        alert('Illegal move. Try again.');
+      let userMove = null;
+      try {
+        userMove = newGame.move({
+          from: sourceSquare,
+          to: targetSquare,
+        });
+      } catch (error) {
+        // In case chess.js throws an error
+        setErrorMessage('That move is illegal.');
+        triggerErrorAnimation();
         return false;
       }
 
-      const uciMove = `${userMove.from}${userMove.to}`;
+      // If the move is illegal, set an error message
+      if (!userMove) {
+        setErrorMessage('That move is illegal.');
+        triggerErrorAnimation();
+        return false;
+      }
 
+      // Otherwise, clear any previous error message
+      setErrorMessage('');
+      setAnimateError(false); // Ensure animation is reset
+
+      // Compare the move to the puzzle’s expected solution move
+      const uciMove = `${userMove.from}${userMove.to}`;
       if (uciMove === currentPuzzle.moves[moveIndex]) {
         let newMoveIndex = moveIndex + 1;
         setGame(newGame);
 
-        // "Computer" response
+        // If puzzle expects a computer response right after user’s move
         if (newMoveIndex < currentPuzzle.moves.length) {
           const computerMove = newGame.move(currentPuzzle.moves[newMoveIndex]);
           if (computerMove) {
@@ -76,7 +109,6 @@ function PuzzleSolver(mode) {
             newMoveIndex++;
           }
         }
-
         setMoveIndex(newMoveIndex);
 
         if (newMoveIndex >= currentPuzzle.moves.length) {
@@ -99,8 +131,48 @@ function PuzzleSolver(mode) {
     setCurrentIndex((prev) => (prev + 1) % puzzles.length);
   };
 
+  // Trigger showing solution (animated or not)
   const handleShowSolution = () => {
     setShowSolution(true);
+    setReplayIndex(0); // Start from beginning
+  };
+
+  // Step through solution moves automatically
+  useEffect(() => {
+    let intervalId = null;
+
+    if (showSolution && currentPuzzle?.moves) {
+      intervalId = setInterval(() => {
+        setReplayIndex((prev) => {
+          const next = prev + 1;
+          if (next > currentPuzzle.moves.length) {
+            clearInterval(intervalId);
+            return prev;
+          }
+          return next;
+        });
+      }, SOLUTION_MOVE_DELAY);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [showSolution, currentPuzzle]);
+
+  useEffect(() => {
+    if (currentPuzzle && replayIndex >= 0) {
+      const replayChess = new Chess(currentPuzzle.initial_fen);
+      currentPuzzle.moves.slice(0, replayIndex).forEach((m) => replayChess.move(m));
+      setGame(replayChess);
+    }
+  }, [replayIndex, currentPuzzle]);
+
+  // NEW: Function to trigger error animation
+  const triggerErrorAnimation = () => {
+    setAnimateError(true);
+    setTimeout(() => setAnimateError(false), 500); // Duration matches CSS animation
   };
 
   const puzzleOrientation = currentPuzzle?.starting_color; // 'white' or 'black'
@@ -116,7 +188,9 @@ function PuzzleSolver(mode) {
       ) : (
         <>
           <div className={styles.header}>
-            <h2>Puzzle {currentIndex + 1} of {puzzles.length}</h2>
+            <h2>
+              Puzzle {currentIndex + 1} of {puzzles.length}
+            </h2>
             <Timer
               key={currentIndex}
               initialTime={120}
@@ -145,22 +219,36 @@ function PuzzleSolver(mode) {
             />
           </div>
 
+          {/* Aggressive Error Message */}
+          {errorMessage && (
+            <div
+              className={`${styles.errorMessage} ${
+                animateError ? styles.shake : ''
+              }`}
+            >
+              {errorMessage}
+            </div>
+          )}
+
           <div className={styles.status}>
             {isSolved && (
               <div className={styles.success}>
-                Puzzle Solved!
+                <p>Puzzle Solved!</p>
                 <button onClick={handleNextPuzzle}>Next Puzzle</button>
               </div>
             )}
             {isFailed && (
               <div className={styles.failure}>
-                Puzzle Failed
+                <p>Puzzle Failed</p>
                 {!showSolution && (
                   <button onClick={handleShowSolution}>Show Solution</button>
                 )}
                 {showSolution && (
                   <div className={styles.solution}>
-                    Solution: {currentPuzzle?.moves?.join(' ')}
+                    <p>
+                      <strong>Moves ({replayIndex}/{currentPuzzle.moves.length}):</strong>{' '}
+                      {currentPuzzle.moves.join(' ')}
+                    </p>
                   </div>
                 )}
                 <button onClick={handleNextPuzzle}>Next Puzzle</button>

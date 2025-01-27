@@ -295,6 +295,52 @@ button:active {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.errorMessage {
+  color: #ffffff; /* White text for high contrast */
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 1rem auto;
+  padding: 1rem 1.5rem;
+  background: #e74c3c; /* Bright red background */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 2px solid #c0392b; /* Darker red border */
+  max-width: 500px;
+  text-align: center;
+  animation: shake 0.5s ease;
+  position: relative;
+  z-index: 10;
+}
+
+/* Shake Animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+/* Optional: Flashing Border for Extra Aggression */
+.errorMessage::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid #c0392b;
+  border-radius: 10px;
+  animation: flashBorder 1s infinite;
+  z-index: -1;
+}
+
+@keyframes flashBorder {
+  0%, 100% { border-color: #c0392b; }
+  50% { border-color: #ffffff; }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .PuzzleSolver {

@@ -17,7 +17,15 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exercises.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Change this to a secure secret key
-CORS(app)
+
+# Allow all origins
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
+
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 

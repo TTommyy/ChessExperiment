@@ -6,6 +6,9 @@ import chess.pgn
 from datetime import datetime
 import random
 import heapq
+# import logging
+# from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+# from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exercises.db'
@@ -19,10 +22,22 @@ class Exercise(db.Model):
     moves = db.Column(db.JSON, nullable=False)
     starting_color = db.Column(db.String(5), nullable=False)
     motives = db.Column(db.String(200))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(80), unique=True, nullable=False)
+#     password_hash = db.Column(db.String(128), nullable=False)
+#     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+#     def set_password(self, password):
+#         self.password_hash = generate_password_hash(password)
+
+#     def check_password(self, password):
+#         return check_password_hash(self.password_hash, password)
 
 @app.route('/api/exercises', methods=['GET', 'POST'])
 def handle_exercises():
+    current_user = get_jwt_identity()
     if request.method == 'POST':
         data = request.get_json()
 
@@ -51,7 +66,7 @@ def handle_exercises():
             return jsonify({'error': str(e)}), 400
 
     elif request.method == 'GET':
-        exercises = Exercise.query.all()
+        exercises = Exercise.query.filter_by(user_id=current_user).all()
         return jsonify([{
             'id': ex.id,
             'initial_fen': ex.initial_fen,
@@ -147,6 +162,35 @@ def get_puzzle_sequence():
         'ordered': ordered_list,    # up to 21 puzzles, grouped by motive
         'random': random_list       # up to 21, no two consecutive same motive
     })
+
+@app.route('/api/users/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    if not data or not data.get('username') or not data.get('password'):
+        return jsonify({'error': 'Username and password required'}), 400
+    username = data['username']
+    if User.query.filter_by(username=username).first():
+        return jsonify({'error': 'Username already exists'}), 400
+    user = User(username=username)
+    user.set_password(data['password'])
+    db.session.add(user)
+    db.session.commit()
+    app.logger.info("User %s registered", username)
+    return jsonify({'message': 'User created successfully'}), 201
+
+@app.route('/api/users/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    if not data or not data.get('username') or not data.get('password'):
+        return jsonify({'error': 'Username and password required'}), 400
+    username = data['username']
+    user = User.query.filter_by(username=username).first()
+    if not user or not user.check_password(data['password']):
+        return jsonify({'error': 'Invalid username or password'}), 401
+    access_token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(hours=1))
+    app.logger.info("User %s logged in", username)
+    return jsonify({'access_token': access_token}), 200
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

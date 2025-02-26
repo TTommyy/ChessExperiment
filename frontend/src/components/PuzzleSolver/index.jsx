@@ -95,13 +95,13 @@ function PuzzleSolver(mode) {
       setErrorMessage('');
       setAnimateError(false); // Ensure animation is reset
 
-      // Compare the move to the puzzle’s expected solution move
+      // Compare the move to the puzzle's expected solution move
       const uciMove = `${userMove.from}${userMove.to}`;
       if (uciMove === currentPuzzle.moves[moveIndex]) {
         let newMoveIndex = moveIndex + 1;
         setGame(newGame);
 
-        // If puzzle expects a computer response right after user’s move
+        // If puzzle expects a computer response right after user's move
         if (newMoveIndex < currentPuzzle.moves.length) {
           const computerMove = newGame.move(currentPuzzle.moves[newMoveIndex]);
           if (computerMove) {
@@ -130,6 +130,32 @@ function PuzzleSolver(mode) {
   const handleNextPuzzle = () => {
     setCurrentIndex((prev) => (prev + 1) % puzzles.length);
   };
+
+  // NEW: Automatically show the solution and then load the next puzzle after 30 seconds when the puzzle is failed
+  useEffect(() => {
+    if (isFailed) {
+      // Automatically trigger solution view if not already done
+      if (!showSolution) {
+        setShowSolution(true);
+        setReplayIndex(0);
+      }
+      // Start a timer: after 30 seconds, load the next puzzle
+      const timerId = setTimeout(() => {
+        handleNextPuzzle();
+      }, 30000); // 30000 ms = 30 seconds
+      return () => clearTimeout(timerId);
+    }
+  }, [isFailed, showSolution, puzzles.length]);
+
+  // NEW: Automatically load the next puzzle after 30 seconds when the puzzle is solved
+  useEffect(() => {
+    if (isSolved) {
+      const timerId = setTimeout(() => {
+        handleNextPuzzle();
+      }, 30000); // 30000 ms = 30 seconds
+      return () => clearTimeout(timerId);
+    }
+  }, [isSolved, puzzles.length]);
 
   // Trigger showing solution (animated or not)
   const handleShowSolution = () => {

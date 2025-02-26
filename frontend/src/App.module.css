@@ -6,27 +6,33 @@
 
   .modeSelector {
     display: flex;
+    justify-content: center;
     gap: 1rem;
     margin-bottom: 2rem;
   }
 
-  .modeButton {
+  .modeSelectorButton {
     padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    border: none;
-    background: #f0f0f0;
+    font-size: 1.1rem;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
     cursor: pointer;
-    font-weight: 600;
     transition: all 0.2s ease;
   }
 
-  .modeButton.active {
-    background: #4CAF50;
+  .modeSelectorButton.active {
+    background-color: #007bff;
     color: white;
+    border-color: #0056b3;
   }
 
-  .modeButton:hover {
-    transform: translateY(-1px);
+  .modeSelectorButton:hover {
+    background-color: #f0f0f0;
+  }
+
+  .modeSelectorButton.active:hover {
+    background-color: #0056b3;
   }
 
   .puzzleContainer {
@@ -57,4 +63,8 @@
   .puzzleModeButton:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .trainerContainer {
+    text-align: center;
   }

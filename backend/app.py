@@ -3,18 +3,23 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import chess
 import chess.pgn
-from datetime import datetime
 import random
 import heapq
-# import logging
-# from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
-# from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
+from flask_jwt_extended import (
+    JWTManager,
+    create_access_token,
+    jwt_required,
+    get_jwt_identity
+)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exercises.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Change this to a secure secret key
 CORS(app)
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,25 +27,23 @@ class Exercise(db.Model):
     moves = db.Column(db.JSON, nullable=False)
     starting_color = db.Column(db.String(5), nullable=False)
     motives = db.Column(db.String(200))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
 
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String(80), unique=True, nullable=False)
-#     password_hash = db.Column(db.String(128), nullable=False)
-#     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-
-#     def set_password(self, password):
-#         self.password_hash = generate_password_hash(password)
-
-#     def check_password(self, password):
-#         return check_password_hash(self.password_hash, password)
+class Result(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    exercise_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
+    result = db.Column(db.String(100), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 @app.route('/api/exercises', methods=['GET', 'POST'])
 def handle_exercises():
-    current_user = get_jwt_identity()
     if request.method == 'POST':
         data = request.get_json()
-
         try:
             # Validate moves
             board = chess.Board(data['initial_fen'])
@@ -66,7 +69,7 @@ def handle_exercises():
             return jsonify({'error': str(e)}), 400
 
     elif request.method == 'GET':
-        exercises = Exercise.query.filter_by(user_id=current_user).all()
+        exercises = Exercise.query.all()
         return jsonify([{
             'id': ex.id,
             'initial_fen': ex.initial_fen,
@@ -85,6 +88,7 @@ def delete_exercise(exercise_id):
     db.session.delete(exercise)
     db.session.commit()
     return jsonify({'message': 'Exercise deleted successfully'}), 200
+
 
 @app.route('/api/exercises/sequence', methods=['GET'])
 def get_puzzle_sequence():
@@ -159,39 +163,56 @@ def get_puzzle_sequence():
 
 
     return jsonify({
-        'ordered': ordered_list,    # up to 21 puzzles, grouped by motive
-        'random': random_list       # up to 21, no two consecutive same motive
+        'ordered': ordered_list,
+        'random': random_list
     })
-
-@app.route('/api/users/register', methods=['POST'])
-def register():
-    data = request.get_json()
-    if not data or not data.get('username') or not data.get('password'):
-        return jsonify({'error': 'Username and password required'}), 400
-    username = data['username']
-    if User.query.filter_by(username=username).first():
-        return jsonify({'error': 'Username already exists'}), 400
-    user = User(username=username)
-    user.set_password(data['password'])
-    db.session.add(user)
-    db.session.commit()
-    app.logger.info("User %s registered", username)
-    return jsonify({'message': 'User created successfully'}), 201
 
 @app.route('/api/users/login', methods=['POST'])
 def login():
     data = request.get_json()
-    if not data or not data.get('username') or not data.get('password'):
-        return jsonify({'error': 'Username and password required'}), 400
     username = data['username']
+    password = data['password']
     user = User.query.filter_by(username=username).first()
-    if not user or not user.check_password(data['password']):
-        return jsonify({'error': 'Invalid username or password'}), 401
-    access_token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(hours=1))
-    app.logger.info("User %s logged in", username)
-    return jsonify({'access_token': access_token}), 200
+    if user and user.password == password:  # In production, use proper password hashing
+        access_token = create_access_token(identity=user.id)
+        return jsonify({
+            'access_token': access_token,
+            'user_id': user.id,
+            'username': user.username
+        }), 200
+    return jsonify({'error': 'Invalid credentials'}), 401
+
+@app.route('/api/results', methods=['POST'])
+@jwt_required()
+def save_result():
+    data = request.get_json()
+    user_id = get_jwt_identity()  # Get user_id from JWT token
+    exercise_id = data['exercise_id']
+    result = data['result']
+    result = Result(exercise_id=exercise_id, user_id=user_id, result=result)
+    db.session.add(result)
+    db.session.commit()
+    return jsonify({'message': 'Result saved successfully'}), 200
+
+@app.route('/api/results/user', methods=['GET'])
+@jwt_required()
+def get_user_results():
+    user_id = get_jwt_identity()
+    results = Result.query.filter_by(user_id=user_id).all()
+    return jsonify([{
+        'id': r.id,
+        'exercise_id': r.exercise_id,
+        'result': r.result,
+        'created_at': r.created_at.isoformat()
+    } for r in results]), 200
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        # Check if admin user exists before creating
+        existing_admin = User.query.filter_by(username='boss').first()
+        if not existing_admin:
+            user = User(username='boss', password='password')
+            db.session.add(user)
+            db.session.commit()
     app.run(debug=True, port=5001, host='0.0.0.0')

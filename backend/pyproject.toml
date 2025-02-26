@@ -1,0 +1,12 @@
+
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Backend service"
+requires-python = ">3.9"
+dependencies = [
+    "flask-jwt-extended>=4.0.0",
+    "python-chess>=1.999",
+    "flask-sqlalchemy>=3.0.0",
+    "flask-cors>=4.0.0",
+]

@@ -1,0 +1,641 @@
+nohup: ignoring input
+ * Serving Flask app 'app.py'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.4:5001
+[33mPress CTRL+C to quit[0m
+89.64.33.142 - - [26/Feb/2025 16:11:12] "OPTIONS /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:12] "POST /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:20] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:20] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:20] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:20] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:27] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:27] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:27] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:11:27] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:12:13] "OPTIONS /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:12:13] "POST /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:12:16] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:12:16] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:12:16] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:12:16] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:14:46] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:14:46] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:14:46] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:14:46] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:15:14] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:15:15] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [26/Feb/2025 16:15:42] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:15:42] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:15:42] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:15:42] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:15:56] "OPTIONS /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:15:56] "DELETE /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:08] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:08] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:08] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:08] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:10] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:10] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:10] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [26/Feb/2025 16:16:10] "GET /api/exercises/sequence HTTP/1.1" 200 -
+83.20.220.111 - - [26/Feb/2025 18:46:44] "OPTIONS /api/users/login HTTP/1.1" 200 -
+83.20.220.111 - - [26/Feb/2025 18:46:44] "[31m[1mPOST /api/users/login HTTP/1.1[0m" 401 -
+205.210.31.27 - - [26/Feb/2025 18:53:17] "[33mGET / HTTP/1.1[0m" 404 -
+205.210.31.106 - - [26/Feb/2025 21:13:54] "[33mGET / HTTP/1.1[0m" 404 -
+45.156.129.125 - - [26/Feb/2025 21:39:58] code 400, message Bad request version ('À\x14À')
+45.156.129.125 - - [26/Feb/2025 21:39:58] "[31m[1m\x16\x03\x01\x00\x9d\x01\x00\x00\x99\x03\x03¯$º*\x11\x8d­\x91°ðþO¾\x8b~Ù¡\x0c\x0eÈ\x84ðhÏí¢4á\x80%èç\x00\x00BÀ\x11À\x07À\x13À\x09À\x14À[0m" 400 -
+45.156.129.125 - - [26/Feb/2025 21:40:14] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00\x9d\x01\x00\x00\x99\x03\x03ÍñÕÍV?÷\x0e\x1bÅó[]\x13\x8ab/\x96ÆéX\x95ëa¢#þñµè\x90°\x00\x00BÀ\x11À\x07À\x13À')
+45.156.129.125 - - [26/Feb/2025 21:40:14] "[31m[1m\x16\x03\x01\x00\x9d\x01\x00\x00\x99\x03\x03ÍñÕÍV?÷\x0e\x1bÅó[]\x13\x8ab/\x96ÆéX\x95ëa¢#þñµè\x90°\x00\x00BÀ\x11À\x07À\x13À\x09À\x14À[0m" 400 -
+198.235.24.52 - - [27/Feb/2025 02:03:13] code 400, message Bad request version ('À\x13À')
+198.235.24.52 - - [27/Feb/2025 02:03:13] "[31m[1m\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x95¨Nø\x15þ)\x02¹\x82å\x86\x1c\x90àã\x1fJÇ\x1fY\x0eñÕKwÖàØéÊË \x98\x0e£à­§\x9aæE3\x99\x04Ø:\x95Õ3÷Þ~ãá+/rGÉöÛ8ÝE\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À[0m" 400 -
+198.235.24.52 - - [27/Feb/2025 02:03:13] code 400, message Bad request version ('À(À$À\x14À')
+198.235.24.52 - - [27/Feb/2025 02:03:13] "[31m[1m\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03\x0d\x0bîÖ\x1a¶È}àÊg\x8cêò@B\x90\x93*k«?)\x83\x80úEî[³CÏ\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À[0m" 400 -
+198.235.24.148 - - [27/Feb/2025 02:26:50] code 400, message Bad request syntax ('\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03')
+198.235.24.148 - - [27/Feb/2025 02:26:50] "[31m[1m\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03[0m" 400 -
+198.235.24.148 - - [27/Feb/2025 02:26:50] code 400, message Bad request version ('À(À$À\x14À')
+198.235.24.148 - - [27/Feb/2025 02:26:50] "[31m[1m\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03\x1fËQÛ¹P\x98n·\x9dÂr«B\x82°vÅG²j\\;Ê\x9d Ø`[6|à\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À[0m" 400 -
+74.82.47.5 - - [27/Feb/2025 08:04:58] code 400, message Bad request version ('À\x14À')
+74.82.47.5 - - [27/Feb/2025 08:04:58] "[31m[1m\x16\x03\x01\x00{\x01\x00\x00w\x03\x03ð\x9d\x07á ÛÐò\x9c;Dg\x0eì7¤\x8a\x85ù\x17{¼Ï\x10º·ò§©\x10`s\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À[0m" 400 -
+185.224.128.17 - - [27/Feb/2025 08:51:15] "[33mCONNECT example.com:80 HTTP/1.1[0m" 404 -
+185.224.128.17 - - [27/Feb/2025 08:51:30] code 400, message Bad request syntax ('\x04\x01\x00P\x00\x00\x00\x01\x00example.com\x00')
+185.224.128.17 - - [27/Feb/2025 08:51:30] "[31m[1m\x04\x01\x00P\x00\x00\x00\x01\x00example.com\x00[0m" 400 -
+185.224.128.17 - - [27/Feb/2025 08:51:30] code 400, message Bad request syntax ('\x05\x01\x00')
+185.224.128.17 - - [27/Feb/2025 08:51:30] "[31m[1m\x05\x01\x00[0m" 400 -
+31.0.95.27 - - [27/Feb/2025 09:48:33] "OPTIONS /api/users/login HTTP/1.1" 200 -
+31.0.95.27 - - [27/Feb/2025 09:48:33] "POST /api/users/login HTTP/1.1" 200 -
+31.0.95.27 - - [27/Feb/2025 09:48:43] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+31.0.95.27 - - [27/Feb/2025 09:48:43] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+31.0.95.27 - - [27/Feb/2025 09:48:44] "GET /api/exercises/sequence HTTP/1.1" 200 -
+31.0.95.27 - - [27/Feb/2025 09:48:44] "GET /api/exercises/sequence HTTP/1.1" 200 -
+47.251.85.4 - - [27/Feb/2025 11:55:32] code 400, message Bad request version ('À\x13À')
+47.251.85.4 - - [27/Feb/2025 11:55:32] "[31m[1m\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03I\x06²ù¼\x99iÀYûøºe-\x83Ud]\x0e\x8d·b8´gÆÝ9dZ8f gÁ\x81i³öòË°©\x19NÖ½\x95g|püé<Z¡\x90T·é¥8'O;\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À[0m" 400 -
+47.251.85.4 - - [27/Feb/2025 11:55:42] "[33mGET / HTTP/1.1[0m" 404 -
+47.251.72.127 - - [27/Feb/2025 15:22:32] code 400, message Bad request version ('\x86,\x83Ã\x90\x03')
+47.251.72.127 - - [27/Feb/2025 15:22:32] "[31m[1m\x16\x03\x01\x00´\x01\x00\x00°\x03\x036\x06z\x05çÚÊ\x1dû\x139ÉÁ\x99\x0c\x86,\x83Ã\x90\x03[0m" 400 -
+47.251.72.127 - - [27/Feb/2025 15:22:32] "[33mGET / HTTP/1.1[0m" 404 -
+123.160.223.75 - - [27/Feb/2025 16:14:14] "[33mGET / HTTP/1.1[0m" 404 -
+89.64.33.142 - - [27/Feb/2025 16:50:47] "OPTIONS /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:50:47] "POST /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:50:48] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:50:48] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:50:48] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:50:48] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:06] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:06] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:06] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:06] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:58] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:58] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:58] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 16:52:58] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:14] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:14] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:14] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:14] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:02:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:04:39] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:04:39] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:05:04] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:04] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:05:08] "OPTIONS /api/exercises/24 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:09] "DELETE /api/exercises/24 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:10] "OPTIONS /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:11] "DELETE /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:26] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:26] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:05:34] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:34] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:05:40] "OPTIONS /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:40] "DELETE /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:42] "OPTIONS /api/exercises/24 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:05:43] "DELETE /api/exercises/24 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:43] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:43] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:06:52] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:52] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:53] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:53] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:56] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:56] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:56] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:06:57] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:07:05] "OPTIONS /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:07:05] "DELETE /api/exercises/23 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:08:57] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:08:57] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:09:03] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:09:03] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:09:03] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:09:04] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:41] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:41] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:10:47] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:47] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:47] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:47] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:50] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:50] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:50] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:10:50] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:43] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:43] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:11:50] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:50] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:50] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:50] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:11:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:13:21] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:13:22] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 17:13:30] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:13:30] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:13:30] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 17:13:30] "GET /api/exercises HTTP/1.1" 200 -
+188.166.16.179 - - [27/Feb/2025 19:05:38] code 400, message Bad request version ('\x05â!ËÕ`¡\x7f¦gk>ó\x8b÷Ì¸"Ç\x96¬÷ÿñh\\2\x01æ4h>\x00Æ\x13\x01\x13\x02\x13\x03\x13\x04\x13\x05À,À0\x00£\x00\x9fÌ©Ì¨ÌªÀ¯À\xadÀ£À\x9fÀ]ÀaÀWÀS\x00§À+À/\x00¢\x00\x9eÀ®À¬À¢À\x9eÀ\\À`ÀVÀR\x00¦À$À(\x00k\x00jÀsÀw\x00Ä\x00Ã\x00m\x00ÅÀ#À\'\x00g\x00@ÀrÀv\x00¾\x00½\x00l\x00¿À')
+188.166.16.179 - - [27/Feb/2025 19:05:38] "[31m[1m\x16\x03\x01\x01¨\x01\x00\x01¤\x03\x033kò+\x8e²¡87Ñ=7&åO¸Hû 0G\x0e(îo\\\x10ôiCò¢ \x05â!ËÕ`¡\x7f¦gk>ó\x8b÷Ì¸"Ç\x96¬÷ÿñh\\2\x01æ4h>\x00Æ\x13\x01\x13\x02\x13\x03\x13\x04\x13\x05À,À0\x00£\x00\x9fÌ©Ì¨ÌªÀ¯À­À£À\x9fÀ]ÀaÀWÀS\x00§À+À/\x00¢\x00\x9eÀ®À¬À¢À\x9eÀ\\À`ÀVÀR\x00¦À$À(\x00k\x00jÀsÀw\x00Ä\x00Ã\x00m\x00ÅÀ#À'\x00g\x00@ÀrÀv\x00¾\x00½\x00l\x00¿À[0m" 400 -
+147.185.132.106 - - [27/Feb/2025 20:45:26] "[33mGET / HTTP/1.1[0m" 404 -
+89.64.33.142 - - [27/Feb/2025 22:05:43] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:05:43] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:05:47] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:05:47] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:05:47] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:05:47] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:05:48] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:05:48] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:08:23] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:08:23] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:08:29] "OPTIONS /api/exercises/28 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:08:29] "DELETE /api/exercises/28 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:09:30] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:09:31] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:09:33] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:09:33] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:09:33] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:09:33] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:09:34] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:09:34] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:10:50] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:10:50] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:10:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:10:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:11:59] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:11:59] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:12:45] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:12:45] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:12:45] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:12:45] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:13:35] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:13:35] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:13:37] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:13:37] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:15:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:15:34] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:15:36] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:15:36] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:09] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:09] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:20:13] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:13] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:13] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:13] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:14] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:14] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:24] "OPTIONS /api/exercises/33 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:20:25] "DELETE /api/exercises/33 HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:21:04] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:21:04] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:21:07] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:21:07] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:23:38] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:23:38] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:23:41] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:23:41] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:25:41] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:25:41] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:25:44] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:25:44] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:26:42] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:26:42] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:26:48] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:26:48] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:26:48] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:26:48] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:27:38] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:27:38] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:27:40] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:27:40] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:28:38] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:28:38] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [27/Feb/2025 22:28:44] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:28:44] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:28:44] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [27/Feb/2025 22:28:45] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:21:23] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:21:23] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:21:31] "OPTIONS /api/exercises/39 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:21:31] "DELETE /api/exercises/39 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:22:38] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:22:38] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:24:00] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:00] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:24:05] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:05] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:05] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:05] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:06] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:06] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:06] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:24:07] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:14] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:14] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:26:18] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:18] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:18] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:19] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:20] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:20] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:20] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:26:20] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:29:17] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:29:17] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:29:21] "OPTIONS /api/exercises/42 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:29:21] "DELETE /api/exercises/42 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:26] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:26] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:30:33] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:33] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:33] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:33] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:34] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:34] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:34] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:30:34] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:31:19] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:31:19] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:32:21] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:32:21] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:33:46] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:33:46] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:35:21] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:35:21] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:36:44] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:36:44] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:36:54] "OPTIONS /api/exercises/47 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:36:54] "DELETE /api/exercises/47 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:00] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:00] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:00] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:00] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:01] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:01] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:01] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:37:01] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:38:39] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:38:40] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:39:15] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:39:15] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:42:07] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:42:07] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 01:43:59] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 01:43:59] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+136.144.178.239 - - [28/Feb/2025 02:43:16] "[33mGET /Authorization HTTP/1.1[0m" 404 -
+136.144.178.239 - - [28/Feb/2025 02:43:16] code 400, message Bad request version ('¸\x01V')
+136.144.178.239 - - [28/Feb/2025 02:43:16] "[31m[1m\x16\x03\x01\x00ñ\x01\x00\x00í\x03\x03iº%\x0c\x9fW^úh9\x83µda\x97\x07(²¿b\x9b\x09³o\x1e"×\x0fqíd¸ "ÅLg¡\x93m|¦7fqÖÎ ¸\x01V[0m" 400 -
+136.144.178.239 - - [28/Feb/2025 02:43:16] code 400, message Bad request version ("øh¹Æâzô\x9a!Ö@6\x00,\x13\x02\x13\x01À,À+À0À/\x00\x9f\x00\x9eÀ$À#À(À'À")
+136.144.178.239 - - [28/Feb/2025 02:43:16] "[31m[1m\x16\x03\x01\x00ñ\x01\x00\x00í\x03\x031Ê5r\x19vs\x0f®Kè\x03·\x95mF\x00\x91µ2´vvUÃ\x87\x1d4À\x0cKÏ å1:um\x81\x83MÓ½\x0bðÄ\x8b[ÉÜ\x01®\x1cøh¹Æâzô\x9a!Ö@6\x00,\x13\x02\x13\x01À,À+À0À/\x00\x9f\x00\x9eÀ$À#À(À'À[0m" 400 -
+136.144.178.239 - - [28/Feb/2025 03:01:37] "[33mGET /Authorization HTTP/1.1[0m" 404 -
+136.144.178.239 - - [28/Feb/2025 03:01:37] code 400, message Bad request version ('Ã°LA*;w3`5ß\x1bEÚÚ\x91©¯üK|>lW')
+136.144.178.239 - - [28/Feb/2025 03:01:37] "[31m[1m\x16\x03\x01\x00ñ\x01\x00\x00í\x03\x03ßq\x11DU\x81\x0dc¨f"ýßÉ,É¼Ù8ç\x05\x04\x0d{ \x9f4\x16,ØðÌ Ã°LA*;w3`5ß\x1bEÚÚ\x91©¯üK|>lW[0m" 400 -
+136.144.178.239 - - [28/Feb/2025 03:01:37] code 400, message Bad request version ("¸ä«0rU\x8cPÀ\x96\x92\x11ªÃp\x97!\x00,\x13\x02\x13\x01À,À+À0À/\x00\x9f\x00\x9eÀ$À#À(À'À")
+136.144.178.239 - - [28/Feb/2025 03:01:37] "[31m[1m\x16\x03\x01\x00ñ\x01\x00\x00í\x03\x03¡\x06Áýó.H$Çû\x90\x0b\x83\x8fpg\\j§\x95ÝóÓ\x97:\x869óôR\x88Æ \x932\x10\x1eÍ\x8f+È\x88É6S!1\x1d¸ä«0rU\x8cPÀ\x96\x92\x11ªÃp\x97!\x00,\x13\x02\x13\x01À,À+À0À/\x00\x9f\x00\x9eÀ$À#À(À'À[0m" 400 -
+198.235.24.186 - - [28/Feb/2025 03:01:58] code 400, message Bad request version ('n+0C\x94\x95f\x04\x05\x03')
+198.235.24.186 - - [28/Feb/2025 03:01:58] "[31m[1m\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x06\x12§\x88À\x1c1±N\x1cæ\x1e\x17ÚÃ°aùdo0è\x88Ú2Î0÷s6q¿ \x17\x9f\x8b\x82\x85\x09n+0C\x94\x95f\x04\x05\x03[0m" 400 -
+198.235.24.186 - - [28/Feb/2025 03:01:58] code 400, message Bad request version ('À(À$À\x14À')
+198.235.24.186 - - [28/Feb/2025 03:01:58] "[31m[1m\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03ý¥&\x81\x8e$S\x82Ú¶á\x03A±\x00Q\x82Z©\x1dÏ\x82ð§?ç8\x08\x16¨!\x0b\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À[0m" 400 -
+205.210.31.5 - - [28/Feb/2025 04:22:30] "[33mGET / HTTP/1.1[0m" 404 -
+205.210.31.149 - - [28/Feb/2025 09:24:32] code 400, message Bad request version ('À\x13À')
+205.210.31.149 - - [28/Feb/2025 09:24:32] "[31m[1m\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x14#!­]«vè\\ÿªÕ@Ë¾\x91a\x1a!¤»KÔ\x98»sJ-\x98Ðú\x1d ù÷kmB U)êË\x04+9[´" ~\x03\x16ûÈ<Ì\x87\x1f\x9dÊ\x14É\x005\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À[0m" 400 -
+205.210.31.149 - - [28/Feb/2025 09:24:32] code 400, message Bad HTTP/0.9 request type ("\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03ê\x87\x9d\x9cZNoè\x84é\x9c¾ÖÃÑêÄ\x17f¸õíu¤\x02\x82\x9að.ÃdÛ\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À")
+205.210.31.149 - - [28/Feb/2025 09:24:32] "[31m[1m\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03ê\x87\x9d\x9cZNoè\x84é\x9c¾ÖÃÑêÄ\x17f¸õíu¤\x02\x82\x9að.ÃdÛ\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À[0m" 400 -
+185.224.128.17 - - [28/Feb/2025 10:16:39] "[33mCONNECT example.com:80 HTTP/1.1[0m" 404 -
+185.224.128.17 - - [28/Feb/2025 10:16:54] code 400, message Bad request syntax ('\x05\x01\x00')
+185.224.128.17 - - [28/Feb/2025 10:16:54] "[31m[1m\x05\x01\x00[0m" 400 -
+185.224.128.17 - - [28/Feb/2025 10:16:54] code 400, message Bad request syntax ('\x04\x01\x00P\x00\x00\x00\x01\x00example.com\x00')
+185.224.128.17 - - [28/Feb/2025 10:16:54] "[31m[1m\x04\x01\x00P\x00\x00\x00\x01\x00example.com\x00[0m" 400 -
+207.90.244.2 - - [28/Feb/2025 12:45:18] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00ô\x01\x00\x00ð\x03\x03k|°3')
+207.90.244.2 - - [28/Feb/2025 12:45:18] "[31m[1m\x16\x03\x01\x00ô\x01\x00\x00ð\x03\x03k|°3 t\x02².´h\x03lû,+\x99X\x92\x03¬\x08\x91Û\x91Õ"\x18rÇ«æ\x00\x00rÀ0À,À(À$À\x14À[0m" 400 -
+207.90.244.2 - - [28/Feb/2025 12:45:21] "[33mGET / HTTP/1.1[0m" 404 -
+89.64.33.142 - - [28/Feb/2025 13:03:57] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:03:57] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:03:57] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:03:57] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:05:11] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:05:11] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:05:11] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:05:11] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:06:12] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:06:12] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:07:31] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:07:31] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:08:37] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:08:37] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:09:29] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:09:29] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:10:13] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:10:13] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:10:59] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:10:59] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:11:50] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:11:50] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:12:25] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:12:25] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:13:16] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:13:16] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:14:06] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:14:06] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:15:47] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:15:47] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:15:54] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:15:54] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:15:54] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:15:54] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:16:12] "OPTIONS /api/exercises/61 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:16:12] "DELETE /api/exercises/61 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:17:06] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:17:06] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:18:34] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:18:34] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:19:28] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:19:28] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:19:28] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:21:24] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:24] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:21:29] "OPTIONS /api/exercises/65 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:29] "DELETE /api/exercises/65 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:31] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:31] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:31] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:31] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:33] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:21:33] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:22:16] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:22:16] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:22:55] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:22:55] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+184.105.247.194 - - [28/Feb/2025 13:23:22] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00{\x01\x00\x00w\x03\x03ØRÊ&í©\x00\\(ú|$x6ÍN!\x17´\x83\x08%ý\x86\x03ÔD\x8eKÌ\x11n\x00\x00\x1aÀ/À+À\x11À\x07À\x13À')
+184.105.247.194 - - [28/Feb/2025 13:23:22] "[31m[1m\x16\x03\x01\x00{\x01\x00\x00w\x03\x03ØRÊ&í©\x00\\(ú|$x6ÍN!\x17´\x83\x08%ý\x86\x03ÔD\x8eKÌ\x11n\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À[0m" 400 -
+89.64.33.142 - - [28/Feb/2025 13:24:06] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:06] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:06] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:06] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:07] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:07] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:07] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:08] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:15] "OPTIONS /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:15] "POST /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:17] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:17] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:17] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:17] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:18] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:18] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:18] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:24:18] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:25:07] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:25:07] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:27:21] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:27:21] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:27:25] "OPTIONS /api/exercises/68 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:27:25] "DELETE /api/exercises/68 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:28:28] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:28:28] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:32:04] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:32:04] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:33:32] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:33:32] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 13:46:32] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:46:32] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:46:32] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:46:32] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:46:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:46:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:46:33] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 13:46:33] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:00:05] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:00:05] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 14:06:54] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:06:54] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 14:09:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:09:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:09:33] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:09:33] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:09:34] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:09:34] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:11:59] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:11:59] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 14:59:50] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:59:50] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:59:50] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:59:50] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:59:51] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:59:51] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:59:51] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 14:59:51] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:01:15] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:01:16] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:02:20] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:02:20] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:03:18] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:03:19] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:06:28] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:06:28] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:07:40] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:40] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:07:47] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:47] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:47] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:47] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:54] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:07:54] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:05] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:05] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:05] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:05] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:16] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:16] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:16] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:08:16] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:09:40] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:09:40] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:13:02] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:02] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:13:04] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:04] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:17] "OPTIONS /api/exercises/80 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:17] "DELETE /api/exercises/80 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:21] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:21] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:21] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:21] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:46] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:46] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:46] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:13:47] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:16:57] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:16:57] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:16:58] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:16:58] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:09] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:09] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:09] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:09] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:58] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:58] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:58] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:18:59] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:19:07] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:19:07] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:19:07] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:19:07] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:20:41] "OPTIONS /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:20:41] "POST /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:20:43] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:20:43] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:21:10] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:21:10] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:21:15] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:21:15] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:22:18] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:22:18] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:22:18] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:22:18] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:24:37] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:24:37] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [28/Feb/2025 15:24:43] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:24:43] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:24:43] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:24:43] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:24:56] "OPTIONS /api/exercises/80 HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 15:24:56] "DELETE /api/exercises/80 HTTP/1.1" 200 -
+207.90.244.5 - - [28/Feb/2025 16:39:06] code 400, message Bad request version ('\x01/ðcøx\x83C\x00\x00rÀ0À,À(À$À\x14À')
+207.90.244.5 - - [28/Feb/2025 16:39:06] "[31m[1m\x16\x03\x01\x00ô\x01\x00\x00ð\x03\x03sd\x03úÎßÐþà\x05\x04´Â\x16\x8e mÖñ\x9e\x83ZS\x0b\x01/ðcøx\x83C\x00\x00rÀ0À,À(À$À\x14À[0m" 400 -
+207.90.244.5 - - [28/Feb/2025 16:39:09] "[33mGET / HTTP/1.1[0m" 404 -
+89.64.33.142 - - [28/Feb/2025 16:42:22] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:42:22] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:33] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:33] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:33] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:33] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:43] "OPTIONS /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:43] "POST /api/users/login HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:44] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:44] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:44] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 16:59:44] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 17:02:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [28/Feb/2025 17:02:33] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+205.210.31.235 - - [28/Feb/2025 19:49:30] "[33mGET / HTTP/1.1[0m" 404 -
+20.9.244.228 - - [28/Feb/2025 22:50:23] code 400, message Bad request version ('\x00{\x000\x000\x000\x000\x00A\x00A\x000\x000\x00-\x000\x00A\x000\x000\x00-\x000\x000\x00a\x000\x00-\x00A\x00A\x000\x00A\x00-\x000\x000\x000\x000\x00A\x000\x00A\x00A\x000\x00A\x00A\x000\x00}\x00\x00\x00àmß_')
+20.9.244.228 - - [28/Feb/2025 22:50:23] "[31m[1m\x01\x00\x00ýÎú\x0b° \x00\x00\x00MMS\x14\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x12\x00\x00\x00\x01\x00\x03\x00ðððð\x0b\x00\x04\x00\x1c\x00\x03\x00N\x00S\x00P\x00l\x00a\x00y\x00e\x00r\x00/\x009\x00.\x000\x00.\x000\x00.\x002\x009\x008\x000\x00;\x00 \x00{\x000\x000\x000\x000\x00A\x00A\x000\x000\x00-\x000\x00A\x000\x000\x00-\x000\x000\x00a\x000\x00-\x00A\x00A\x000\x00A\x00-\x000\x000\x000\x000\x00A\x000\x00A\x00A\x000\x00A\x00A\x000\x00}\x00\x00\x00àmß_[0m" 400 -
+20.9.244.228 - - [28/Feb/2025 22:50:24] code 400, message Bad request version ('GetClassName\x00\x00\x00\x02\x04\x00\x00\x00\x00\x01\x00')
+20.9.244.228 - - [28/Feb/2025 22:50:24] "[31m[1m\x00\x00\x00\x1f\x00\x00\x00\x00\x00\x00\x00\x0cGetClassName\x00\x00\x00\x02\x04\x00\x00\x00\x00\x01\x00[0m" 400 -
+89.64.33.142 - - [01/Mar/2025 00:50:51] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:50:51] "OPTIONS /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:50:51] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:50:51] "GET /api/exercises/sequence HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:50:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:50:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:50:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:50:53] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:52:11] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:52:11] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 00:54:20] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:54:21] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 00:55:16] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:55:16] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 00:56:23] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:56:23] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 00:57:33] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:57:33] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 00:58:31] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 00:58:31] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:00:15] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:00:15] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:01:41] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:01:42] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:02:38] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:02:38] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:02:48] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:02:48] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:02:48] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:02:48] "GET /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:02:54] "OPTIONS /api/exercises/89 HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:02:54] "DELETE /api/exercises/89 HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:03:41] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:03:41] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:04:32] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:04:33] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:05:13] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:05:13] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:05:53] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:05:53] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:07:00] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:07:00] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:07:46] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:07:46] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:08:49] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:08:49] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:09:31] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:09:32] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:11:42] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:11:43] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:13:14] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:13:15] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:13:58] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:13:59] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:14:43] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:14:43] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:15:35] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:15:35] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:16:46] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:16:46] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:17:27] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:17:28] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+89.64.33.142 - - [01/Mar/2025 01:19:18] "OPTIONS /api/exercises HTTP/1.1" 200 -
+89.64.33.142 - - [01/Mar/2025 01:19:18] "[35m[1mPOST /api/exercises HTTP/1.1[0m" 201 -
+74.82.47.2 - - [01/Mar/2025 02:54:30] code 400, message Bad request version ('À\x14À')
+74.82.47.2 - - [01/Mar/2025 02:54:30] "[31m[1m\x16\x03\x01\x00{\x01\x00\x00w\x03\x03x\x86C2\x1c!ïJ7\x0e\x19\x11qÄþêÜñ?\x147a&\x02ÿ\x88\x94\x03ërô}\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À[0m" 400 -
+205.210.31.202 - - [01/Mar/2025 02:55:39] code 400, message Bad request syntax ('\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03óç\x84ÁÖ"')
+205.210.31.202 - - [01/Mar/2025 02:55:39] "[31m[1m\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03óç\x84ÁÖ"[0m" 400 -
+205.210.31.202 - - [01/Mar/2025 02:55:39] code 400, message Bad request version ('À(À$À\x14À')
+205.210.31.202 - - [01/Mar/2025 02:55:39] "[31m[1m\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03k\x97ú®\x9e¶Î´¼\x17\x94¸ý5\x87$²\x17²(x\x11\x83dO6\x95\x14àÎ¶\x85\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À[0m" 400 -
+20.163.14.102 - - [01/Mar/2025 03:26:27] "[33mGET /v2/ HTTP/1.1[0m" 404 -
+198.235.24.17 - - [01/Mar/2025 03:59:33] "[33mGET / HTTP/1.1[0m" 404 -
+35.189.232.73 - - [01/Mar/2025 10:13:16] "[33mGET / HTTP/1.1[0m" 404 -
+185.224.128.17 - - [01/Mar/2025 10:50:56] "[33mCONNECT example.com:80 HTTP/1.1[0m" 404 -
+185.224.128.17 - - [01/Mar/2025 10:51:11] code 400, message Bad request syntax ('\x05\x01\x00')
+185.224.128.17 - - [01/Mar/2025 10:51:11] "[31m[1m\x05\x01\x00[0m" 400 -
+185.224.128.17 - - [01/Mar/2025 10:51:11] code 400, message Bad request syntax ('\x04\x01\x00P\x00\x00\x00\x01\x00example.com\x00')
+185.224.128.17 - - [01/Mar/2025 10:51:11] "[31m[1m\x04\x01\x00P\x00\x00\x00\x01\x00example.com\x00[0m" 400 -
+34.77.191.221 - - [01/Mar/2025 12:05:45] "[33mGET / HTTP/1.1[0m" 404 -
+198.235.24.141 - - [01/Mar/2025 12:14:25] code 400, message Bad request version ('À\x13À')
+198.235.24.141 - - [01/Mar/2025 12:14:25] "[31m[1m\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03¼\x18K_â&ô\x9aZqÝ\x119ú%»#1mÑz©¹W¥$t\x19çã\x9e3 4\x09Ç\x05µl\x96\x9afà\x88+wA×\x94\x8d¥gsaÙ<´\x9c'\x10\x1a¸Ì9Ó\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À[0m" 400 -
+198.235.24.141 - - [01/Mar/2025 12:14:25] code 400, message Bad request version ('æi1"\x01»\x8d@')
+198.235.24.141 - - [01/Mar/2025 12:14:25] "[31m[1m\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03\x0f.\x93ì\x83\x8a@ðB\x9cuß3zN\x85c<Â8\x93\x0dæi1"\x01»\x8d@[0m" 400 -
+154.212.141.180 - - [01/Mar/2025 14:19:27] "[33mGET / HTTP/1.1[0m" 404 -
+91.238.181.93 - - [01/Mar/2025 14:42:22] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+91.238.181.93 - - [01/Mar/2025 14:42:22] "[31m[1m\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr[0m" 400 -

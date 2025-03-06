@@ -1,44 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');
 
 :root {
   /* Updated Colors */
-  --timer-bg-color: rgba(255, 255, 255, 0.95);
-  --timer-border-color: rgba(255, 255, 255, 0.2);
-  --timer-progress-bg: rgba(77, 127, 255, 0.1);
-  --timer-bar-color: linear-gradient(135deg, #4d7fff, #3d64db);
-  --timer-text-color: #2c3e50;
-  --timer-low-color: #d73a49;
+  --timer-bg-color: rgba(255, 255, 255, 0.8);
+  --timer-border-color: rgba(255, 255, 255, 0.3);
+  --timer-progress-bg: rgba(240, 240, 240, 0.5);
+  --timer-bar-color: linear-gradient(90deg, #667eea, #764ba2);
+  --timer-text-color: #4a5568;
+  --timer-low-color: #e53e3e;
+  --timer-label-color: #667eea;
 
   /* Updated Spacing */
-  --timer-border-radius: 12px;
-  --timer-padding: 1.5rem;
+  --timer-border-radius: 16px;
+  --timer-padding: 0.8rem 1rem;
 }
 
 .timer {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   width: 100%;
-  max-width: 320px;
+  min-width: 180px;
   background: var(--timer-bg-color);
   border-radius: var(--timer-border-radius);
   padding: var(--timer-padding);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  margin: 1rem auto;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  margin: 0;
+  backdrop-filter: blur(12px);
   border: 1px solid var(--timer-border-color);
+  border-left: 4px solid #4e54c8;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  height: calc(100% - 2rem);
+}
+
+.timerLabel {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--timer-label-color);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
+  position: relative;
+  display: inline-block;
+}
+
+.timerLabel::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea, transparent);
+}
+
+.timerContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
 .timer:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+}
+
+.lowTimeContainer {
+  background: rgba(255, 245, 245, 0.9);
+  border-color: rgba(229, 62, 62, 0.3);
+  box-shadow: 0 8px 32px rgba(229, 62, 62, 0.2);
+}
+
+.lowTimeContainer:hover {
+  box-shadow: 0 12px 40px rgba(229, 62, 62, 0.25);
 }
 
 .timerProgress {
   position: relative;
   height: 8px;
   background: var(--timer-progress-bg);
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .timerBar {
@@ -50,6 +98,7 @@
   background: var(--timer-bar-color);
   transform-origin: left center;
   transition: transform 0.5s linear;
+  border-radius: 8px;
 }
 
 /* Animated shine effect */
@@ -63,7 +112,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.3) 50%,
     transparent 100%
   );
   animation: shine 2s infinite;
@@ -76,8 +125,8 @@
 
 .timerText {
   text-align: center;
-  margin-top: 1rem;
-  font-size: 1.4rem;
+  margin-top: 0.75rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--timer-text-color);
   letter-spacing: -0.5px;
@@ -88,22 +137,50 @@
 .timerText.lowTime {
   animation: pulse 1s infinite alternate;
   color: var(--timer-low-color);
+  text-shadow: 0 0 8px rgba(229, 62, 62, 0.3);
 }
 
 @keyframes pulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
+  from { transform: scale(1); opacity: 0.9; }
+  to { transform: scale(1.05); opacity: 1; }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .timer {
     max-width: 100%;
-    margin: 1rem 0;
-    padding: 1.2rem;
+    min-width: 150px;
+    padding: 0.6rem 0.8rem;
+    margin: 0;
+  }
+
+  .timerLabel {
+    font-size: 0.7rem;
+    margin-bottom: 0.3rem;
   }
 
   .timerText {
     font-size: 1.2rem;
+    margin-top: 0.5rem;
   }
+
+  .timerProgress {
+    height: 6px;
+  }
+}
+
+.timerIcon {
+  position: absolute;
+  right: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(78, 84, 200, 0.2);
+  transition: var(--transition-all);
+  width: 20px;
+  height: 20px;
+}
+
+.timer:hover .timerIcon {
+  color: rgba(78, 84, 200, 0.4);
+  transform: translateY(-50%) scale(1.1);
 }

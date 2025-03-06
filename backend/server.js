@@ -1,0 +1,587 @@
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const sqlite3 = require('sqlite3').verbose();
+const jwt = require('jsonwebtoken');
+const path = require('path');
+
+// Initialize Express app
+const app = express();
+const PORT = process.env.PORT || 5001;
+const JWT_SECRET = 'chess-trainer-jwt-secret-key'; // In production, use environment variable
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// Connect to SQLite database
+const dbPath = path.join(__dirname, '../frontend/chess_exercises.db');
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('Database connection error:', err.message);
+  } else {
+    console.log('Connected to the database');
+    initDb();
+  }
+});
+
+// Auth middleware
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized: No token provided' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Forbidden: Invalid token' });
+    }
+    req.user = user;
+    next();
+  });
+};
+
+// Create users table if not exists
+const initDb = () => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      group_id INTEGER NOT NULL,
+      current_session INTEGER NOT NULL DEFAULT 1,
+      FOREIGN KEY (group_id) REFERENCES groups(id)
+    )
+  `, (err) => {
+    if (err) {
+      console.error('Error creating users table:', err.message);
+    } else {
+      console.log('Users table initialized');
+      createPuzzleResultsTable();
+    }
+  });
+
+  // Create puzzle_results table
+  const createPuzzleResultsTable = () => {
+    db.run(`
+      CREATE TABLE IF NOT EXISTS puzzle_results (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        exercise_id INTEGER NOT NULL,
+        session_id INTEGER NOT NULL,
+        is_solved BOOLEAN NOT NULL,
+        attempts INTEGER NOT NULL DEFAULT 0,
+        correct_moves INTEGER NOT NULL DEFAULT 0,
+        incorrect_moves INTEGER NOT NULL DEFAULT 0,
+        time_spent_seconds INTEGER NOT NULL DEFAULT 0,
+        completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (exercise_id) REFERENCES exercises(id),
+        FOREIGN KEY (session_id) REFERENCES sessions(id)
+      )
+    `, (err) => {
+      if (err) {
+        console.error('Error creating puzzle_results table:', err.message);
+      } else {
+        console.log('Puzzle results table initialized');
+        createSessionLogsTable();
+      }
+    });
+  };
+
+  // Create session_logs table
+  const createSessionLogsTable = () => {
+    db.run(`
+      CREATE TABLE IF NOT EXISTS session_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        session_id INTEGER NOT NULL,
+        start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        end_time TIMESTAMP,
+        total_time_seconds INTEGER,
+        puzzles_completed INTEGER NOT NULL DEFAULT 0,
+        puzzles_solved INTEGER NOT NULL DEFAULT 0,
+        completed BOOLEAN NOT NULL DEFAULT 0,
+        next_available_at TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (session_id) REFERENCES sessions(id)
+      )
+    `, (err) => {
+      if (err) {
+        console.error('Error creating session_logs table:', err.message);
+      } else {
+        console.log('Session logs table initialized');
+      }
+    });
+  };
+};
+
+// API Routes
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+// User registration
+app.post('/api/users/register', (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if user exists
+  db.get('SELECT * FROM users WHERE username = ?', [username], (err, existingUser) => {
+    if (err) {
+      console.error('Error checking user:', err.message);
+      return res.status(500).json({ error: 'Server error during registration' });
+    }
+
+    if (existingUser) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
+    // Count users to determine group (simple round-robin)
+    db.get('SELECT COUNT(*) as count FROM users', [], (err, result) => {
+      if (err) {
+        console.error('Error counting users:', err.message);
+        return res.status(500).json({ error: 'Server error during registration' });
+      }
+
+      const userCount = result.count;
+      const assignedGroup = (userCount % 4) + 1; // Groups 1-4
+
+      // Insert new user
+      db.run(
+        'INSERT INTO users (username, password, group_id, current_session) VALUES (?, ?, ?, ?)',
+        [username, password, assignedGroup, 1],
+        function(err) {
+          if (err) {
+            console.error('Error inserting user:', err.message);
+            return res.status(500).json({ error: 'Server error during registration' });
+          }
+
+          const userId = this.lastID;
+
+          // Generate token
+          const token = jwt.sign(
+            { id: userId, username, group_id: assignedGroup },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+          );
+
+          // Log registration
+          console.log(`User registered: ${username}, Group: ${assignedGroup}, Session: 1`);
+
+          res.status(201).json({
+            message: 'User registered successfully',
+            user_id: userId,
+            username,
+            group_id: assignedGroup,
+            current_session: 1,
+            access_token: token
+          });
+        }
+      );
+    });
+  });
+});
+
+// User login
+app.post('/api/users/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Find user
+  db.get(
+    'SELECT id, group_id, current_session FROM users WHERE username = ? AND password = ?',
+    [username, password],
+    (err, user) => {
+      if (err) {
+        console.error('Error finding user:', err.message);
+        return res.status(500).json({ error: 'Server error during login' });
+      }
+
+      if (!user) {
+        return res.status(401).json({ error: 'Invalid username or password' });
+      }
+
+      // Check if there's a completed session and if 24 hours have passed
+      db.get(
+        'SELECT * FROM session_logs WHERE user_id = ? AND completed = 1 ORDER BY end_time DESC LIMIT 1',
+        [user.id],
+        (err, lastSession) => {
+          if (err) {
+            console.error('Error checking last session:', err.message);
+            return res.status(500).json({ error: 'Server error checking session availability' });
+          }
+
+          const now = new Date();
+
+          // Only check time restriction if the user has completed a session before
+          if (lastSession && lastSession.next_available_at) {
+            const nextAvailable = new Date(lastSession.next_available_at);
+
+            if (now < nextAvailable) {
+              // Calculate hours left
+              const hoursLeft = Math.ceil((nextAvailable - now) / (1000 * 60 * 60));
+
+              return res.status(403).json({
+                error: 'You cannot login yet. Please wait 24 hours between sessions.',
+                next_available_at: lastSession.next_available_at,
+                hours_left: hoursLeft
+              });
+            }
+          }
+
+          // If we get here, the user can login
+          // Generate token
+          const token = jwt.sign(
+            { id: user.id, username, group_id: user.group_id },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+          );
+
+          // Log login
+          console.log(`User logged in: ${username}, Group: ${user.group_id}, Session: ${user.current_session}`);
+
+          // Add next_available_at to the response if it exists
+          const loginResponse = {
+            message: 'Login successful',
+            user_id: user.id,
+            username,
+            group_id: user.group_id,
+            current_session: user.current_session,
+            access_token: token
+          };
+
+          if (lastSession && lastSession.next_available_at) {
+            loginResponse.next_available_at = lastSession.next_available_at;
+          }
+
+          res.status(200).json(loginResponse);
+        }
+      );
+    }
+  );
+});
+
+// Update user session (requires auth)
+app.post('/api/users/:userId/next-session', authenticateToken, (req, res) => {
+  const { userId } = req.params;
+
+  // Get current session
+  db.get('SELECT current_session FROM users WHERE id = ?', [userId], (err, user) => {
+    if (err) {
+      console.error('Error finding user:', err.message);
+      return res.status(500).json({ error: 'Server error during session update' });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    let newSession = user.current_session;
+
+    // Only update if not already at session 5
+    if (newSession < 5) {
+      newSession += 1;
+
+      db.run(
+        'UPDATE users SET current_session = ? WHERE id = ?',
+        [newSession, userId],
+        (err) => {
+          if (err) {
+            console.error('Error updating session:', err.message);
+            return res.status(500).json({ error: 'Server error during session update' });
+          }
+
+          // Log session update
+          console.log(`User ${userId} advanced to session ${newSession}`);
+
+          res.status(200).json({
+            message: 'Session updated successfully',
+            current_session: newSession
+          });
+        }
+      );
+    } else {
+      res.status(200).json({
+        message: 'Already at maximum session',
+        current_session: newSession
+      });
+    }
+  });
+});
+
+// Get exercises for a session (requires auth)
+app.get('/api/exercises/group/:groupId/session/:sessionId', authenticateToken, (req, res) => {
+  const { groupId, sessionId } = req.params;
+
+  // Validate group and session
+  if (groupId < 1 || groupId > 4 || sessionId < 1 || sessionId > 5) {
+    return res.status(400).json({ error: 'Invalid group or session' });
+  }
+
+  // Get exercises for the group and session
+  db.all(
+    `SELECT e.* FROM exercises e
+     JOIN exercise_sessions es ON e.id = es.exercise_id
+     JOIN sessions s ON es.session_id = s.id
+     WHERE s.group_id = ? AND s.session_number = ?
+     ORDER BY es.order_in_session`,
+    [groupId, sessionId],
+    (err, exercises) => {
+      if (err) {
+        console.error('Error fetching exercises:', err.message);
+        return res.status(500).json({ error: 'Server error fetching exercises' });
+      }
+
+      // Log exercise fetch
+      console.log(`Fetched ${exercises.length} exercises for Group ${groupId}, Session ${sessionId}`);
+
+      res.status(200).json(exercises);
+    }
+  );
+});
+
+// Start a new session
+app.post('/api/sessions/start', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+  const sessionId = req.body.session_id;
+
+  // Check if user has an ongoing session
+  db.get(
+    'SELECT * FROM session_logs WHERE user_id = ? AND completed = 0',
+    [userId],
+    (err, activeSession) => {
+      if (err) {
+        console.error('Error checking active session:', err.message);
+        return res.status(500).json({ error: 'Server error checking session' });
+      }
+
+      if (activeSession) {
+        return res.status(200).json({
+          message: 'Session already in progress',
+          session_log_id: activeSession.id,
+          session_id: activeSession.session_id
+        });
+      }
+
+      // Check if there's a completed session and it's not 24 hours old yet
+      db.get(
+        'SELECT * FROM session_logs WHERE user_id = ? AND completed = 1 ORDER BY end_time DESC LIMIT 1',
+        [userId],
+        (err, lastSession) => {
+          if (err) {
+            console.error('Error checking last session:', err.message);
+            return res.status(500).json({ error: 'Server error checking last session' });
+          }
+
+          if (lastSession && lastSession.next_available_at) {
+            const nextAvailable = new Date(lastSession.next_available_at);
+            const now = new Date();
+
+            if (now < nextAvailable) {
+              const hoursLeft = Math.ceil((nextAvailable - now) / (1000 * 60 * 60));
+              return res.status(403).json({
+                error: 'Session not available yet',
+                next_available_at: lastSession.next_available_at,
+                hours_left: hoursLeft
+              });
+            }
+          }
+
+          // Create a new session log
+          db.run(
+            'INSERT INTO session_logs (user_id, session_id) VALUES (?, ?)',
+            [userId, sessionId],
+            function(err) {
+              if (err) {
+                console.error('Error creating session log:', err.message);
+                return res.status(500).json({ error: 'Server error creating session log' });
+              }
+
+              const sessionLogId = this.lastID;
+              console.log(`User ${userId} started session ${sessionId}, log ID: ${sessionLogId}`);
+
+              res.status(201).json({
+                message: 'Session started successfully',
+                session_log_id: sessionLogId,
+                session_id: sessionId
+              });
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
+// Complete a session
+app.post('/api/sessions/:sessionLogId/complete', authenticateToken, (req, res) => {
+  const { sessionLogId } = req.params;
+  const userId = req.user.id;
+  const { total_time_seconds, puzzles_completed, puzzles_solved } = req.body;
+
+  // Verify the session belongs to the user
+  db.get(
+    'SELECT * FROM session_logs WHERE id = ? AND user_id = ?',
+    [sessionLogId, userId],
+    (err, sessionLog) => {
+      if (err) {
+        console.error('Error finding session log:', err.message);
+        return res.status(500).json({ error: 'Server error finding session log' });
+      }
+
+      if (!sessionLog) {
+        return res.status(404).json({ error: 'Session log not found or unauthorized' });
+      }
+
+      if (sessionLog.completed) {
+        return res.status(400).json({ error: 'Session already completed' });
+      }
+
+      // Calculate next available time (24 hours from now)
+      const now = new Date();
+      const nextAvailable = new Date(now);
+      nextAvailable.setHours(nextAvailable.getHours() + 24);
+
+      // Update session log
+      db.run(
+        `UPDATE session_logs SET
+         end_time = CURRENT_TIMESTAMP,
+         total_time_seconds = ?,
+         puzzles_completed = ?,
+         puzzles_solved = ?,
+         completed = 1,
+         next_available_at = ?
+         WHERE id = ?`,
+        [
+          total_time_seconds,
+          puzzles_completed,
+          puzzles_solved,
+          nextAvailable.toISOString(),
+          sessionLogId
+        ],
+        (err) => {
+          if (err) {
+            console.error('Error updating session log:', err.message);
+            return res.status(500).json({ error: 'Server error updating session log' });
+          }
+
+          console.log(`User ${userId} completed session ${sessionLog.session_id}, log ID: ${sessionLogId}`);
+
+          res.status(200).json({
+            message: 'Session completed successfully',
+            next_available_at: nextAvailable.toISOString()
+          });
+        }
+      );
+    }
+  );
+});
+
+// Record a puzzle result
+app.post('/api/puzzles/results', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+  const {
+    exercise_id,
+    session_id,
+    is_solved,
+    attempts,
+    correct_moves,
+    incorrect_moves,
+    time_spent_seconds
+  } = req.body;
+
+  // Insert puzzle result
+  db.run(
+    `INSERT INTO puzzle_results
+     (user_id, exercise_id, session_id, is_solved, attempts, correct_moves, incorrect_moves, time_spent_seconds)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [userId, exercise_id, session_id, is_solved ? 1 : 0, attempts, correct_moves, incorrect_moves, time_spent_seconds],
+    function(err) {
+      if (err) {
+        console.error('Error recording puzzle result:', err.message);
+        return res.status(500).json({ error: 'Server error recording puzzle result' });
+      }
+
+      const resultId = this.lastID;
+      console.log(`Puzzle result recorded for user ${userId}, exercise ${exercise_id}, solved: ${is_solved}`);
+
+      // Update session log to increment puzzles completed/solved
+      db.run(
+        `UPDATE session_logs
+         SET puzzles_completed = puzzles_completed + 1,
+             puzzles_solved = puzzles_solved + ${is_solved ? 1 : 0}
+         WHERE user_id = ? AND session_id = ? AND completed = 0`,
+        [userId, session_id],
+        (err) => {
+          if (err) {
+            console.error('Error updating session log counters:', err.message);
+            // Still return success for the puzzle result
+          }
+        }
+      );
+
+      res.status(201).json({
+        message: 'Puzzle result recorded successfully',
+        result_id: resultId
+      });
+    }
+  );
+});
+
+// Get user's puzzle history
+app.get('/api/users/puzzle-history', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+
+  db.all(
+    `SELECT
+       pr.id, pr.exercise_id, pr.session_id,
+       pr.is_solved, pr.attempts, pr.correct_moves,
+       pr.incorrect_moves, pr.time_spent_seconds,
+       pr.completed_at, e.motives, e.starting_color
+     FROM puzzle_results pr
+     JOIN exercises e ON pr.exercise_id = e.id
+     WHERE pr.user_id = ?
+     ORDER BY pr.completed_at DESC`,
+    [userId],
+    (err, results) => {
+      if (err) {
+        console.error('Error fetching puzzle history:', err.message);
+        return res.status(500).json({ error: 'Server error fetching puzzle history' });
+      }
+
+      res.status(200).json(results);
+    }
+  );
+});
+
+// Get user's session history
+app.get('/api/users/session-history', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+
+  db.all(
+    `SELECT
+       id, session_id, start_time, end_time,
+       total_time_seconds, puzzles_completed,
+       puzzles_solved, next_available_at
+     FROM session_logs
+     WHERE user_id = ? AND completed = 1
+     ORDER BY end_time DESC`,
+    [userId],
+    (err, results) => {
+      if (err) {
+        console.error('Error fetching session history:', err.message);
+        return res.status(500).json({ error: 'Server error fetching session history' });
+      }
+
+      res.status(200).json(results);
+    }
+  );
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Database connected: ${dbPath}`);
+});

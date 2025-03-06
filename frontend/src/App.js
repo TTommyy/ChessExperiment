@@ -3,6 +3,8 @@ import Login from './components/Login';
 import PuzzleSolver from './components/PuzzleSolver';
 import LogoutModal from './components/LogoutModal';
 import StudyCompleted from './components/StudyCompleted';
+import ThemeToggle from './components/ThemeToggle';
+import LogoFooter from './components/LogoFooter';
 
 import { logout } from './api/users';
 import { useState, useEffect } from 'react';
@@ -355,9 +357,16 @@ function App() {
     />
   );
 
+  // Get user initials for profile icon
+  const getUserInitials = () => {
+    if (!userInfo.username) return '?';
+    return userInfo.username.charAt(0).toUpperCase();
+  };
+
   // Render user info panel
   const renderUserInfoPanel = () => (
     <div className={styles.userInfoPanel}>
+      <div className={styles.profileIcon}>{getUserInitials()}</div>
       <h3>Welcome, {userInfo.username}!</h3>
       <p>Group: {userInfo.groupId}</p>
       <p>Session: {userInfo.currentSession} of {MAX_SESSIONS}</p>
@@ -365,36 +374,86 @@ function App() {
     </div>
   );
 
+  // Render header with theme toggle and user info
+  const renderHeader = () => (
+    <div className={styles.headerBar}>
+      <div className={styles.userProfile}>
+        <div className={styles.profileIcon}>{getUserInitials()}</div>
+        <div className={styles.userInfo}>
+          <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
+        </div>
+      </div>
+      <div className={styles.headerActions}>
+        <ThemeToggle />
+        <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+      </div>
+    </div>
+  );
+
   // User is not logged in
   if (!isLoggedIn) {
     return (
-      <>
+      <div className={styles.appWrapper}>
         {renderLogoutModal()}
+        <div className={styles.headerBar}>
+          <div className={styles.headerActions}>
+            <ThemeToggle />
+          </div>
+        </div>
         <Login onLoginSuccess={handleLoginSuccess} />
-      </>
+        <LogoFooter />
+      </div>
     );
   }
 
   // User has completed all sessions
   if (hasCompletedAllSessions()) {
     return (
-      <StudyCompleted
-        username={userInfo.username}
-        onLogout={performLogout}
-      />
+      <div className={styles.appWrapper}>
+        <div className={styles.headerBar}>
+          <div className={styles.userProfile}>
+            <div className={styles.profileIcon}>{getUserInitials()}</div>
+            <div className={styles.userInfo}>
+              <span>User: {userInfo.username}</span>
+            </div>
+          </div>
+          <div className={styles.headerActions}>
+            <ThemeToggle />
+            <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+          </div>
+        </div>
+        <StudyCompleted
+          username={userInfo.username}
+          onLogout={performLogout}
+        />
+        <LogoFooter />
+      </div>
     );
   }
 
   // Loading state
   if (loading) {
     return (
-      <>
+      <div className={styles.appWrapper}>
         {renderLogoutModal(getSessionInfo())}
-        <div className={styles.loadingContainer}>
-          <h2>Loading puzzle exercises...</h2>
-          <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+        <div className={styles.headerBar}>
+          <div className={styles.userProfile}>
+            <div className={styles.profileIcon}>{getUserInitials()}</div>
+            <div className={styles.userInfo}>
+              <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
+            </div>
+          </div>
+          <div className={styles.headerActions}>
+            <ThemeToggle />
+            <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+          </div>
         </div>
-      </>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loader}></div>
+          <h2>Loading puzzle exercises...</h2>
+        </div>
+        <LogoFooter />
+      </div>
     );
   }
 
@@ -406,14 +465,24 @@ function App() {
     const isLastSession = userInfo.currentSession === MAX_SESSIONS;
 
     return (
-      <>
+      <div className={styles.appWrapper}>
         {renderLogoutModal(getSessionInfo())}
+        <div className={styles.headerBar}>
+          <div className={styles.userProfile}>
+            <div className={styles.profileIcon}>{getUserInitials()}</div>
+            <div className={styles.userInfo}>
+              <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
+            </div>
+          </div>
+          <div className={styles.headerActions}>
+            <ThemeToggle />
+            <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+          </div>
+        </div>
         <div className={styles.instructionsContainer}>
-          {renderUserInfoPanel()}
-
           <div className={styles.instructions}>
             <h2>Instructions</h2>
-            <div className={styles.instructionsContent}>
+            <div className={`${styles.instructionsContent} dark-mode-card`}>
               <p>In this study, you will solve a series of chess puzzles. Each puzzle has a specific solution that you need to find.</p>
               <p>You will have 2 minutes to solve each puzzle. If you can't solve it within the time limit, the solution will be shown to you.</p>
               <p>Try to solve as many puzzles as you can correctly. Your progress will be saved between sessions.</p>
@@ -454,7 +523,8 @@ function App() {
             )}
           </div>
         </div>
-      </>
+        <LogoFooter />
+      </div>
     );
   }
 
@@ -463,11 +533,21 @@ function App() {
     const isLastSession = userInfo.currentSession === MAX_SESSIONS;
 
     return (
-      <>
+      <div className={styles.appWrapper}>
         {renderLogoutModal(getSessionInfo())}
+        <div className={styles.headerBar}>
+          <div className={styles.userProfile}>
+            <div className={styles.profileIcon}>{getUserInitials()}</div>
+            <div className={styles.userInfo}>
+              <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
+            </div>
+          </div>
+          <div className={styles.headerActions}>
+            <ThemeToggle />
+            <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+          </div>
+        </div>
         <div className={styles.sessionStart}>
-          {renderUserInfoPanel()}
-
           <div className={styles.startSessionContainer}>
             <h2>Chess Puzzle Training</h2>
             {isLastSession && (
@@ -491,20 +571,27 @@ function App() {
             </button>
           </div>
         </div>
-      </>
+        <LogoFooter />
+      </div>
     );
   }
 
   // Render the PuzzleSolver with the loaded exercises
   return (
-    <>
+    <div className={styles.appWrapper}>
       {renderLogoutModal(getSessionInfo())}
       <div className={styles.appContainer}>
         <div className={styles.headerBar}>
-          <div className={styles.userInfo}>
-            <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
+          <div className={styles.userProfile}>
+            <div className={styles.profileIcon}>{getUserInitials()}</div>
+            <div className={styles.userInfo}>
+              <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
+            </div>
           </div>
-          <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+          <div className={styles.headerActions}>
+            <ThemeToggle />
+            <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+          </div>
         </div>
 
         <div className={styles.puzzleSolverContainer}>
@@ -519,7 +606,8 @@ function App() {
           />
         </div>
       </div>
-    </>
+      <LogoFooter />
+    </div>
   );
 }
 

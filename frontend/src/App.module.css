@@ -14,25 +14,26 @@
   .modeSelectorButton {
     padding: 0.75rem 1.5rem;
     font-size: 1.1rem;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-all);
   }
 
   .modeSelectorButton.active {
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
-    border-color: #0056b3;
+    border-color: var(--primary-hover);
   }
 
   .modeSelectorButton:hover {
-    background-color: #f0f0f0;
+    background-color: var(--surface-secondary);
   }
 
   .modeSelectorButton.active:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-hover);
   }
 
   .puzzleContainer {
@@ -47,22 +48,23 @@
 
   .puzzleModeButton {
     padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--surface-primary);
+    color: var(--text-primary);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-all);
   }
 
   .puzzleModeButton.active {
-    background: #2196F3;
+    background: var(--primary-color);
     color: white;
     border-color: transparent;
   }
 
   .puzzleModeButton:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow-color);
   }
 
   .trainerContainer {
@@ -76,28 +78,29 @@
     justify-content: center;
     height: 100vh;
     width: 100%;
-    background-color: #f5f5f5;
+    background-color: var(--background-primary);
   }
 
   .userInfoPanel {
-    background-color: #fff;
+    background-color: var(--surface-primary);
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
     margin-bottom: 30px;
     width: 80%;
     max-width: 400px;
     text-align: center;
+    border: 1px solid var(--border-color);
   }
 
   .userInfoPanel h3 {
     margin-top: 0;
-    color: #333;
+    color: var(--text-primary);
   }
 
   .userInfoPanel p {
     margin: 5px 0;
-    color: #666;
+    color: var(--text-secondary);
   }
 
   .modeButtons {
@@ -110,15 +113,22 @@
     padding: 15px 30px;
     font-size: 1.2rem;
     border: none;
-    border-radius: 5px;
-    background-color: #2c3e50;
+    border-radius: var(--radius-md);
+    background-color: var(--primary-color);
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: var(--transition-all);
   }
 
   .modeButtons button:hover {
-    background-color: #1a2533;
+    background-color: var(--primary-hover);
+  }
+
+  .appWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--background-primary);
   }
 
   .appContainer {
@@ -127,46 +137,46 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     width: 100%;
+    flex-grow: 1;
   }
 
   .headerBar {
     position: sticky;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
+    background-color: var(--surface-primary);
+    backdrop-filter: var(--blur-intensity);
     padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
     margin-bottom: 1.5rem;
     z-index: 100;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--border-color);
   }
 
   .userInfo {
     font-weight: 500;
-    color: #4a5568;
+    color: var(--text-secondary);
   }
 
   .logoutButton {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--primary-gradient);
     color: white;
     border: none;
     padding: 0.6rem 1.2rem;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    transition: var(--transition-all);
+    box-shadow: 0 4px 12px var(--shadow-color);
   }
 
   .logoutButton:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 6px 16px var(--shadow-color);
   }
 
   .loadingContainer {
@@ -176,19 +186,19 @@
     justify-content: center;
     min-height: 60vh;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
+    background-color: var(--surface-primary);
+    backdrop-filter: var(--blur-intensity);
+    border-radius: var(--radius-xl);
     padding: 2rem;
     margin: 2rem auto;
     max-width: 800px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
   }
 
   .loadingContainer h2 {
     margin-bottom: 2rem;
-    color: #4a5568;
+    color: var(--text-secondary);
   }
 
   .sessionStart {
@@ -196,177 +206,178 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
+    background-color: var(--surface-primary);
+    backdrop-filter: var(--blur-intensity);
+    border-radius: var(--radius-xl);
     margin: 2rem auto;
     max-width: 800px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
   }
 
   .startSessionContainer {
     text-align: center;
     padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 12px;
+    background-color: var(--surface-secondary);
+    border-radius: var(--radius-lg);
     margin-top: 2rem;
     width: 100%;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 16px var(--shadow-color);
   }
 
   .startSessionContainer h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #4a5568;
+    color: var(--text-primary);
     font-weight: 700;
   }
 
   .startSessionContainer p {
     font-size: 1.2rem;
-    color: #4a5568;
+    color: var(--text-secondary);
     margin-bottom: 2rem;
   }
 
   .startSessionButton {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--primary-gradient);
     color: white;
     border: none;
     padding: 1rem 2rem;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    transition: var(--transition-all);
+    box-shadow: 0 4px 12px var(--shadow-color);
     margin-top: 1rem;
   }
 
   .startSessionButton:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 24px var(--shadow-color);
   }
 
   .startSessionButton:disabled {
-    background: #cbd5e0;
+    opacity: 0.6;
     cursor: not-allowed;
+    background: #cccccc;
     transform: none;
     box-shadow: none;
   }
 
   .instructionsContainer {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
     display: flex;
     flex-direction: column;
-    min-height: 500px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    align-items: center;
+    background-color: var(--surface-primary);
+    backdrop-filter: var(--blur-intensity);
+    border-radius: var(--radius-xl);
+    margin: 2rem auto;
+    max-width: 900px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    width: 90%;
+    overflow: hidden;
   }
 
   .instructions {
     padding: 2rem;
-    background-color: rgba(248, 249, 250, 0.7);
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
-    margin-top: 2rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    text-align: center;
   }
 
   .instructionsContent {
-    margin: 2rem 0;
-    line-height: 1.7;
-    text-align: left;
+    background-color: var(--card-background);
+    color: var(--card-text);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
   }
 
   .instructionsContent p {
-    margin-bottom: 1rem;
+    text-align: left;
+    color: var(--card-text);
   }
 
   .instructionsContent ul {
-    margin-left: 2rem;
-    margin-top: 0.5rem;
+    text-align: left;
+    padding-left: 1.5rem;
+    color: var(--card-text);
   }
 
   .instructionsContent li {
     margin-bottom: 0.5rem;
+    color: var(--card-text);
   }
 
   .startPrompt {
-    margin-top: 2rem;
     text-align: center;
+    margin-top: 2rem;
   }
 
   .startPrompt h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    color: #4a5568;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-weight: 600;
   }
 
   .waitMessage {
-    background-color: #fef8e8;
-    border: 1px solid #f9e4a7;
-    border-radius: 8px;
+    background-color: var(--surface-tertiary);
     padding: 1.5rem;
+    border-radius: var(--radius-lg);
     margin-top: 2rem;
-    text-align: center;
+    border-left: 4px solid var(--primary-color);
+    text-align: left;
   }
 
   .waitMessage h3 {
-    color: #d4a72c;
-    margin-bottom: 1rem;
+    color: var(--text-primary);
+    margin-top: 0;
   }
 
   .instructionsButton {
-    background: linear-gradient(135deg, #4c51bf, #6366f1);
-    color: white;
-    padding: 0.8rem 1.5rem;
+    background-color: var(--surface-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
     font-size: 1rem;
-    border: none;
-    border-radius: 8px;
     cursor: pointer;
     margin-right: 1rem;
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    transition: var(--transition-all);
+    font-weight: 500;
   }
 
   .instructionsButton:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+    background-color: var(--surface-tertiary);
   }
 
   @media (max-width: 768px) {
     .instructionsContainer,
-    .instructions {
-      padding: 1rem;
+    .sessionStart {
+      width: 95%;
+      margin: 1rem auto;
     }
 
     .headerBar {
       flex-direction: column;
-      align-items: flex-start;
-      padding: 0.8rem;
+      gap: 1rem;
     }
 
     .userInfo {
-      margin-bottom: 0.5rem;
+      text-align: center;
     }
 
     .instructionsButton,
     .startSessionButton {
       width: 100%;
-      margin-right: 0;
-      padding: 0.8rem 1rem;
+      margin: 0.5rem 0;
     }
 
     .loadingContainer,
     .sessionStart {
-      margin: 1rem;
       padding: 1rem;
+      margin: 1rem auto;
     }
 
     .startSessionContainer {
@@ -383,19 +394,73 @@
   }
 
   .finalSessionNote {
-    margin: 20px 0;
-    padding: 15px;
-    background-color: rgba(78, 84, 200, 0.1);
-    border-radius: 10px;
-    border-left: 4px solid #4e54c8;
+    background-color: var(--surface-tertiary);
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: var(--radius-md);
+    text-align: left;
   }
 
   .finalSessionNote p {
     margin: 0;
-    color: #333;
-    font-size: 1.1rem;
+    color: var(--text-secondary);
   }
 
   .finalSessionNote strong {
-    color: #4e54c8;
+    color: var(--primary-color);
+  }
+
+  /* Header actions with theme toggle */
+  .headerActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* User profile */
+  .userProfile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .profileIcon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  /* Styles for loader */
+  .loader {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 576px) {
+    .headerBar {
+      padding: 0.75rem;
+    }
+
+    .headerActions {
+      width: 100%;
+      justify-content: space-between;
+    }
   }

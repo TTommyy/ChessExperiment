@@ -125,7 +125,8 @@ export const recordPuzzleResult = async (
   attempts,
   correctMoves,
   incorrectMoves,
-  timeSpentSeconds
+  timeSpentSeconds,
+  moveTimes = []
 ) => {
   try {
     const response = await axios.post(
@@ -137,7 +138,8 @@ export const recordPuzzleResult = async (
         attempts,
         correct_moves: correctMoves,
         incorrect_moves: incorrectMoves,
-        time_spent_seconds: timeSpentSeconds
+        time_spent_seconds: timeSpentSeconds,
+        move_times: moveTimes
       },
       getAuthConfig()
     );
@@ -145,6 +147,20 @@ export const recordPuzzleResult = async (
     return response.data;
   } catch (error) {
     console.error('Error recording puzzle result:', error);
+    throw error;
+  }
+};
+
+export const getPuzzleMoveTimes = async (resultId) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/puzzles/move-times/${resultId}`,
+      getAuthConfig()
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching puzzle move times:', error);
     throw error;
   }
 };

@@ -49,19 +49,38 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
   const [elapsedPuzzleTime, setElapsedPuzzleTime] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState(Date.now());
   const [movesHistory, setMovesHistory] = useState([]);
+  const [moveTimestamps, setMoveTimestamps] = useState([]);
   const [puzzleInitialized, setPuzzleInitialized] = useState(false);
+  const [attemptedExercises, setAttemptedExercises] = useState(0);
 
   // Function to load a puzzle
   const loadPuzzle = (index) => {
-    if (!exercises || exercises.length === 0 || index >= exercises.length) {
-      console.log('No exercises to load or invalid index');
+    if (!exercises || index >= exercises.length) {
+      console.log('No exercises available or index out of bounds');
       return;
     }
+
+    // Clear previous puzzle data
+    setMovesHistory([]);
+    setMoveTimestamps([]);
+    localStorage.removeItem('current_puzzle_moves');
+    localStorage.removeItem('current_puzzle_move_timestamps');
 
     const puzzle = exercises[index];
     if (!puzzle) {
       console.error('Puzzle is undefined or null');
       return;
+    }
+
+    // Generate a unique key for this puzzle to use in localStorage
+    const puzzleIdentifier = `puzzle_${puzzle.id || index}`;
+
+    // Clear timer data for all previous puzzles
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('puzzle_timer_end_')) {
+        localStorage.removeItem(key);
+      }
     }
 
     // Parse the puzzle moves
@@ -89,9 +108,26 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
     setShowSolutionAfterSuccess(false);
 
     // Reset metrics for new puzzle
-    setPuzzleStartTime(Date.now());
+    const now = Date.now();
+    setPuzzleStartTime(now);
     setElapsedPuzzleTime(0);
     setMovesHistory([]);
+    setMoveTimestamps([]);
+
+    // Store current puzzle state in localStorage for refresh resilience
+    localStorage.setItem('current_puzzle_data', JSON.stringify({
+      index: index,
+      puzzleId: puzzle.id,
+      startTime: now,
+      isSolved: false,
+      isFailed: false,
+      moveIndex: 0
+    }));
+
+    // Clear any previous puzzle FEN and moves data
+    localStorage.removeItem('current_puzzle_fen');
+    localStorage.removeItem('current_puzzle_moves');
+    localStorage.removeItem('current_puzzle_move_timestamps');
 
     // Update parent component with current progress
     updateProgress(index);
@@ -103,7 +139,8 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
       onProgressUpdate({
         puzzlesCompleted: completedExercises,
         totalPuzzles: exercises.length,
-        currentPuzzleIndex: currentPuzzleIndex
+        currentPuzzleIndex: currentPuzzleIndex,
+        attemptedExercises: attemptedExercises
       });
     }
   };
@@ -120,19 +157,22 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
         onComplete({
           puzzlesCompleted: completedExercises,
           totalPuzzles: exercises.length,
-          currentPuzzleIndex: 0 // Reset for next session
+          currentPuzzleIndex: 0, // Reset for next session
+          attemptedExercises: attemptedExercises
         });
       }
     }
   };
 
-  // Function to handle user moves
+  // Handle user moves
   const handleMove = (sourceSquare, targetSquare) => {
     if (isSolved || showSolution || !currentPuzzle) return false;
 
     // Clear any previous error
     setErrorMessage('');
     setAnimateError(false);
+
+    const now = Date.now();
 
     try {
       // Try to make the move
@@ -153,19 +193,50 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
       const uciMove = `${sourceSquare}${targetSquare}`;
       const expectedMove = currentPuzzle.moves[moveIndex];
 
+      // Calculate time spent on this move
+      let timeSpentMs = 0;
+      if (moveTimestamps.length > 0) {
+        // Time since last move
+        timeSpentMs = now - moveTimestamps[moveTimestamps.length - 1];
+      } else {
+        // Time since puzzle start
+        timeSpentMs = now - puzzleStartTime;
+      }
+
+      // Record the move timestamp
+      const updatedMoveTimestamps = [...moveTimestamps, now];
+      setMoveTimestamps(updatedMoveTimestamps);
+      localStorage.setItem('current_puzzle_move_timestamps', JSON.stringify(updatedMoveTimestamps));
+
       // Record the move
       const moveData = {
         uci: uciMove,
         expected: expectedMove,
         isCorrect: uciMove === expectedMove,
-        timestamp: Date.now()
+        timestamp: now,
+        timeSpentMs: timeSpentMs
       };
-      setMovesHistory(prev => [...prev, moveData]);
+
+      const updatedMovesHistory = [...movesHistory, moveData];
+      setMovesHistory(updatedMovesHistory);
+
+      // Store move in localStorage for refresh resilience
+      localStorage.setItem('current_puzzle_moves', JSON.stringify(updatedMovesHistory));
 
       // Compare move against expected
       if (uciMove === expectedMove) {
         setTotalCorrectMoves(prev => prev + 1);
         let newMoveIndex = moveIndex + 1;
+
+        // Update localStorage with current state
+        localStorage.setItem('current_puzzle_data', JSON.stringify({
+          index: currentIndex,
+          puzzleId: currentPuzzle.id,
+          startTime: puzzleStartTime,
+          isSolved: newMoveIndex >= currentPuzzle.moves.length,
+          isFailed: false,
+          moveIndex: newMoveIndex
+        }));
 
         // Make computer's response move if needed
         if (newMoveIndex < currentPuzzle.moves.length) {
@@ -182,14 +253,32 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
               });
 
               if (computerResult) {
-                setGame(new Chess(game.fen())); // This ensures the UI updates
+                const newGameFen = game.fen();
+                setGame(new Chess(newGameFen)); // This ensures the UI updates
                 newMoveIndex++;
                 setMoveIndex(newMoveIndex);
+
+                // Store the game state after computer move
+                localStorage.setItem('current_puzzle_fen', newGameFen);
+                localStorage.setItem('current_puzzle_data', JSON.stringify({
+                  index: currentIndex,
+                  puzzleId: currentPuzzle.id,
+                  startTime: puzzleStartTime,
+                  isSolved: newMoveIndex >= currentPuzzle.moves.length,
+                  isFailed: false,
+                  moveIndex: newMoveIndex
+                }));
 
                 // Check if puzzle is solved after computer's move
                 if (newMoveIndex >= currentPuzzle.moves.length) {
                   setIsSolved(true);
                   setCompletedExercises(prev => prev + 1);
+
+                  // Count as attempted if not already counted
+                  if (!isFailed && !isSolved) {
+                    setAttemptedExercises(prev => prev + 1);
+                  }
+
                   // Automatically show solution after success
                   setShowSolutionAfterSuccess(true);
                   setShowSolution(true);
@@ -209,6 +298,12 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
           // Puzzle is solved if no more computer moves
           setIsSolved(true);
           setCompletedExercises(prev => prev + 1);
+
+          // Count as attempted if not already counted
+          if (!isFailed && !isSolved) {
+            setAttemptedExercises(prev => prev + 1);
+          }
+
           setMoveIndex(newMoveIndex);
           // Automatically show solution after success
           setShowSolutionAfterSuccess(true);
@@ -223,9 +318,23 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
       } else {
         // It's a legal move but not the correct solution
         setTotalIncorrectMoves(prev => prev + 1);
-        setErrorMessage('Incorrect move. Try again!');
         triggerErrorAnimation();
         setIsFailed(true);
+
+        // Store failed state in localStorage
+        localStorage.setItem('current_puzzle_data', JSON.stringify({
+          index: currentIndex,
+          puzzleId: currentPuzzle.id,
+          startTime: puzzleStartTime,
+          isSolved: false,
+          isFailed: true,
+          moveIndex: moveIndex
+        }));
+
+        // Count as attempted if not already
+        if (!isFailed && !isSolved) {
+          setAttemptedExercises(prev => prev + 1);
+        }
 
         // Reset the game to the previous state
         game.undo();
@@ -244,6 +353,9 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
         // Submit puzzle result to backend
         submitPuzzleResult(false);
 
+        // Update progress
+        updateProgress(currentIndex);
+
         return false;
       }
 
@@ -258,20 +370,43 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
     }
   };
 
-  // Handler for timer expiration
+  // Function to handle timeup (time runs out)
   const handleTimeUp = () => {
-    setIsFailed(true);
-    // Automatically show solution when time is up
-    handleShowSolution();
-    // Start solution timer (30 seconds)
-    setSolutionTimer(SOLUTION_DISPLAY_TIME);
+    if (isSolved || showSolution) return;
 
-    // Record elapsed time when time is up
+    console.log('Time up for puzzle, showing solution...');
+    setIsFailed(true);
+
+    // Record the elapsed time
     const timeSpent = Math.floor((Date.now() - puzzleStartTime) / 1000);
     setElapsedPuzzleTime(timeSpent);
 
+    // Automatically show solution
+    setShowSolution(true);
+    setReplayIndex(0);
+    setSolutionTimer(SOLUTION_DISPLAY_TIME);
+
+    // Count as attempted if not already
+    if (!isFailed && !isSolved) {
+      setAttemptedExercises(prev => prev + 1);
+    }
+
+    // Mark puzzle state as failed due to timeout
+    localStorage.setItem('current_puzzle_data', JSON.stringify({
+      index: currentIndex,
+      puzzleId: currentPuzzle?.id,
+      startTime: puzzleStartTime,
+      isSolved: false,
+      isFailed: true,
+      failReason: 'timeout',
+      moveIndex: moveIndex
+    }));
+
     // Submit puzzle result to backend
     submitPuzzleResult(false);
+
+    // Update progress
+    updateProgress(currentIndex);
   };
 
   // Handler for showing solution
@@ -320,6 +455,13 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
     const incorrectMoves = movesHistory.filter(move => !move.isCorrect).length;
     const attempts = correctMoves + incorrectMoves;
 
+    // Prepare move times data
+    const moveTimes = movesHistory.map(move => ({
+      uci: move.uci,
+      isCorrect: move.isCorrect,
+      timeSpentMs: move.timeSpentMs
+    }));
+
     try {
       await recordPuzzleResult(
         currentPuzzle.id,
@@ -328,7 +470,8 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
         attempts,
         correctMoves,
         incorrectMoves,
-        timeSpent
+        timeSpent,
+        moveTimes
       );
       console.log('Puzzle result submitted successfully');
     } catch (error) {
@@ -438,11 +581,16 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
     if (sessionCompleted) {
       completeSession();
 
+      // Clean up any timers
+      const timerKey = `puzzle_timer_end_${window.location.pathname}-${120}`; // assuming 120 seconds is default
+      localStorage.removeItem(timerKey);
+
       // Pass the final progress information to the parent component
       onComplete?.({
         puzzlesCompleted: completedExercises,
         totalPuzzles: exercises.length,
-        currentPuzzleIndex: 0 // Reset for next session
+        currentPuzzleIndex: 0, // Reset for next session
+        attemptedExercises: attemptedExercises
       });
     }
   }, [sessionCompleted]);
@@ -454,6 +602,125 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
       updateProgress(currentIndex);
     }
   }, [completedExercises, exercises, currentIndex]);
+
+  // Effect to handle initialization, resuming from localStorage
+  useEffect(() => {
+    // Set session start time
+    setSessionStartTime(Date.now());
+
+    // Check localStorage for saved state
+    const savedPuzzleMoves = localStorage.getItem('current_puzzle_moves');
+    const savedPuzzleData = localStorage.getItem('current_puzzle_data');
+    const savedPuzzleFen = localStorage.getItem('current_puzzle_fen');
+    const savedMoveTimestamps = localStorage.getItem('current_puzzle_move_timestamps');
+
+    // Restore move timestamps if available
+    if (savedMoveTimestamps) {
+      try {
+        const parsedTimestamps = JSON.parse(savedMoveTimestamps);
+        if (Array.isArray(parsedTimestamps)) {
+          setMoveTimestamps(parsedTimestamps);
+        }
+      } catch (error) {
+        console.error('Error parsing saved move timestamps:', error);
+      }
+    }
+
+    // Restore moves history if available
+    if (savedPuzzleMoves) {
+      try {
+        const parsedMoves = JSON.parse(savedPuzzleMoves);
+        if (Array.isArray(parsedMoves)) {
+          setMovesHistory(parsedMoves);
+        }
+      } catch (error) {
+        console.error('Error parsing saved moves:', error);
+      }
+    }
+
+    if (savedPuzzleData && exercises && exercises.length > 0) {
+      try {
+        const puzzleData = JSON.parse(savedPuzzleData);
+
+        // If the saved puzzle index is valid and within the exercises range
+        if (puzzleData.index >= 0 && puzzleData.index < exercises.length) {
+          // First load the puzzle normally
+          if (puzzleData.index !== currentIndex) {
+            loadPuzzle(puzzleData.index);
+          }
+
+          // Then restore the additional state
+          if (puzzleData.isSolved) {
+            setIsSolved(true);
+          }
+
+          if (puzzleData.isFailed) {
+            setIsFailed(true);
+          }
+
+          if (puzzleData.moveIndex > 0) {
+            setMoveIndex(puzzleData.moveIndex);
+          }
+
+          if (puzzleData.startTime) {
+            setPuzzleStartTime(puzzleData.startTime);
+          }
+
+          // Restore the chess position if available
+          if (savedPuzzleFen) {
+            try {
+              const restoredGame = new Chess(savedPuzzleFen);
+              setGame(restoredGame);
+            } catch (error) {
+              console.error("Error restoring game position:", error);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error restoring puzzle state:", error);
+      }
+    }
+  }, [exercises, currentIndex]);
+
+  // Clear all timer-related localStorage when component unmounts
+  useEffect(() => {
+    return () => {
+      // Clear all puzzle timers and state from localStorage when component unmounts
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && (
+          key.startsWith('puzzle_timer_end_') ||
+          key === 'current_puzzle_data' ||
+          key === 'current_puzzle_moves' ||
+          key === 'current_puzzle_fen' ||
+          key === 'puzzle_timer_heartbeat' ||
+          key === 'current_puzzle_move_timestamps'
+        )) {
+          localStorage.removeItem(key);
+        }
+      }
+    };
+  }, []);
+
+  // Effect to clear timer and update localStorage when moving to a new puzzle
+  useEffect(() => {
+    // When puzzle index changes, clear old timer data
+    if (currentPuzzle && currentPuzzle.id) {
+      const timerKey = `puzzle_timer_end_${window.location.pathname}-120`; // 120 seconds is default timer
+      const currentId = currentPuzzle.id;
+
+      // Store the current puzzle ID to track puzzle changes
+      const lastPuzzleId = localStorage.getItem('last_active_puzzle_id');
+
+      if (lastPuzzleId && lastPuzzleId !== currentId.toString()) {
+        // We've moved to a new puzzle, clear the old timer
+        localStorage.removeItem(timerKey);
+      }
+
+      // Update the last active puzzle ID
+      localStorage.setItem('last_active_puzzle_id', currentId.toString());
+    }
+  }, [currentPuzzle]);
 
   // Render loading state
   if (!exercises || exercises.length === 0) {
@@ -562,6 +829,7 @@ function PuzzleSolver({ exercises, onComplete, onProgressUpdate, userId, session
       <PuzzleProgress
         completedExercises={completedExercises}
         totalExercises={exercises.length}
+        attemptedExercises={attemptedExercises}
       />
     </div>
   );

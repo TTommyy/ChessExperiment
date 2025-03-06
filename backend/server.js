@@ -114,6 +114,29 @@ const initDb = () => {
         console.error('Error creating session_logs table:', err.message);
       } else {
         console.log('Session logs table initialized');
+        createPuzzleMoveTimesTable();
+      }
+    });
+  };
+
+  // Create puzzle_move_times table
+  const createPuzzleMoveTimesTable = () => {
+    db.run(`
+      CREATE TABLE IF NOT EXISTS puzzle_move_times (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        puzzle_result_id INTEGER NOT NULL,
+        move_number INTEGER NOT NULL,
+        move_uci TEXT NOT NULL,
+        is_correct BOOLEAN NOT NULL,
+        time_spent_ms INTEGER NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (puzzle_result_id) REFERENCES puzzle_results(id)
+      )
+    `, (err) => {
+      if (err) {
+        console.error('Error creating puzzle_move_times table:', err.message);
+      } else {
+        console.log('Puzzle move times table initialized');
       }
     });
   };
@@ -489,7 +512,8 @@ app.post('/api/puzzles/results', authenticateToken, (req, res) => {
     attempts,
     correct_moves,
     incorrect_moves,
-    time_spent_seconds
+    time_spent_seconds,
+    move_times
   } = req.body;
 
   // Insert puzzle result
@@ -506,6 +530,29 @@ app.post('/api/puzzles/results', authenticateToken, (req, res) => {
 
       const resultId = this.lastID;
       console.log(`Puzzle result recorded for user ${userId}, exercise ${exercise_id}, solved: ${is_solved}`);
+
+      // If move_times array is provided, save individual move times
+      if (move_times && Array.isArray(move_times) && move_times.length > 0) {
+        let insertCount = 0;
+        const totalMoves = move_times.length;
+
+        move_times.forEach((moveData, index) => {
+          db.run(
+            `INSERT INTO puzzle_move_times
+             (puzzle_result_id, move_number, move_uci, is_correct, time_spent_ms)
+             VALUES (?, ?, ?, ?, ?)`,
+            [resultId, index + 1, moveData.uci, moveData.isCorrect ? 1 : 0, moveData.timeSpentMs],
+            (err) => {
+              if (err) {
+                console.error('Error recording move time:', err.message);
+              } else {
+                insertCount++;
+                console.log(`Recorded move time ${insertCount}/${totalMoves} for puzzle result ${resultId}`);
+              }
+            }
+          );
+        });
+      }
 
       // Update session log to increment puzzles completed/solved
       db.run(
@@ -576,6 +623,49 @@ app.get('/api/users/session-history', authenticateToken, (req, res) => {
       }
 
       res.status(200).json(results);
+    }
+  );
+});
+
+// Get move times for a specific puzzle result
+app.get('/api/puzzles/move-times/:resultId', authenticateToken, (req, res) => {
+  const resultId = req.params.resultId;
+
+  // First check if the puzzle result belongs to the requesting user
+  db.get(
+    `SELECT user_id FROM puzzle_results WHERE id = ?`,
+    [resultId],
+    (err, result) => {
+      if (err) {
+        console.error('Error fetching puzzle result:', err.message);
+        return res.status(500).json({ error: 'Server error fetching puzzle result' });
+      }
+
+      if (!result) {
+        return res.status(404).json({ error: 'Puzzle result not found' });
+      }
+
+      if (result.user_id !== req.user.id) {
+        return res.status(403).json({ error: 'Unauthorized access to puzzle result' });
+      }
+
+      // Now fetch the move times
+      db.all(
+        `SELECT
+           move_number, move_uci, is_correct, time_spent_ms, created_at
+         FROM puzzle_move_times
+         WHERE puzzle_result_id = ?
+         ORDER BY move_number ASC`,
+        [resultId],
+        (err, results) => {
+          if (err) {
+            console.error('Error fetching move times:', err.message);
+            return res.status(500).json({ error: 'Server error fetching move times' });
+          }
+
+          res.status(200).json(results);
+        }
+      );
     }
   );
 });

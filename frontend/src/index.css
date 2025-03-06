@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+@import './Theme.css';
 
 body {
   margin: 0;
@@ -8,9 +9,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+  background: var(--background-gradient);
+  color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure dark theme is applied across the entire application */
+body.dark-theme {
+  background: var(--background-gradient);
+  color: var(--text-primary);
+}
+
+/* Ensure dark theme is applied to the root div as well */
+body.dark-theme #root {
+  background: var(--background-gradient);
+  color: var(--text-primary);
 }
 
 code {
@@ -26,4 +41,9 @@ code {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Apply smooth transitions for theme changes */
+body, button, div, p, h1, h2, h3, h4, h5, h6, input, textarea, select, a {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }

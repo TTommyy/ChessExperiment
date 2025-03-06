@@ -28,6 +28,24 @@ body {
   transform: translateZ(0);
   transition: var(--transition-all);
   text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Chess pattern subtle background for puzzle solver */
+.PuzzleSolver::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30L30 0L0 0L0 30L30 30L60 30L60 0L30 0L30 30L30 60L60 60L60 30L30 30L0 30L0 60L30 60L30 30Z' fill='currentColor' fill-opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 80px 80px;
+  z-index: -1;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .PuzzleSolver:hover {
@@ -41,6 +59,8 @@ body {
   background: var(--surface-secondary);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
+  position: relative;
+  border-left: 4px solid var(--primary-color);
 }
 
 .welcome h1 {
@@ -48,11 +68,17 @@ body {
   margin-bottom: var(--spacing-md);
   color: var(--text-primary);
   font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .welcome p {
   font-size: 1.2rem;
   color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .header {
@@ -68,6 +94,7 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
 }
 
 .header h2 {
@@ -75,15 +102,28 @@ body {
   margin: 0;
   color: var(--text-primary);
   font-weight: 600;
+  position: relative;
 }
 
-/* Board container with timer */
+.header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 3px;
+}
+
+/* Board container with improved focus area */
 .boardContainer {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   margin: var(--spacing-md) auto var(--spacing-lg);
   gap: var(--spacing-md);
+  position: relative;
 }
 
 .sidePanel {
@@ -92,6 +132,16 @@ body {
   gap: var(--spacing-md);
   align-self: stretch;
   width: 280px;
+  transition: opacity 0.3s ease;
+}
+
+/* Dim side panels when board is hovered to increase focus */
+.boardContainer:hover .sidePanel {
+  opacity: 0.7;
+}
+
+.boardContainer:hover .sidePanel:hover {
+  opacity: 1;
 }
 
 .board {
@@ -102,7 +152,7 @@ body {
   border-radius: var(--radius-lg);
   max-width: 550px;
   width: 100%;
-  transition: var(--transition-all);
+  transition: all 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,6 +168,20 @@ body {
 
 .board:hover {
   transform: scale(1.01);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 0 0 2px var(--primary-color, #7160e8);
+}
+
+/* Chess notation markers (only visible on hover) */
+.board::before, .board::after {
+  content: '';
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.board:hover::before, .board:hover::after {
+  opacity: 0.7;
 }
 
 .status {
@@ -126,6 +190,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.status:empty {
+  padding: 0;
+  background: transparent;
 }
 
 /* Motives Section */
@@ -258,14 +333,33 @@ body {
   box-shadow: 0 12px 32px var(--shadow-color);
 }
 
+/* Enhanced success feedback */
 .success {
   color: var(--success-color);
   padding: var(--spacing-md);
   border-radius: var(--radius-md);
   background-color: rgba(47, 133, 90, 0.1);
   border: 1px solid rgba(47, 133, 90, 0.2);
-  animation: fadeIn 0.5s ease;
+  animation: successPulse 2s ease;
   margin: var(--spacing-md) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes successPulse {
+  0% { background-color: rgba(47, 133, 90, 0.1); }
+  30% { background-color: rgba(47, 133, 90, 0.25); }
+  100% { background-color: rgba(47, 133, 90, 0.1); }
+}
+
+.success::after {
+  content: '♔';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  opacity: 0.2;
 }
 
 .failure {
@@ -276,8 +370,20 @@ body {
   border: 1px solid rgba(229, 62, 62, 0.2);
   animation: fadeIn 0.5s ease;
   margin: var(--spacing-md) 0;
+  position: relative;
 }
 
+.failure::after {
+  content: '♗';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  font-size: 1.5rem;
+  opacity: 0.2;
+}
+
+/* Enhanced buttons with chess theme */
 button {
   background-image: var(--primary-gradient);
   border: none;
@@ -286,11 +392,12 @@ button {
   border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 1rem;
-  transition: var(--transition-all);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   margin: var(--spacing-sm);
   box-shadow: 0 4px 12px var(--shadow-color);
+  cursor: pointer;
 }
 
 button::before {
@@ -312,6 +419,12 @@ button:hover {
 
 button:hover::before {
   opacity: 1;
+}
+
+/* Focus indicator for keyboard navigation */
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(113, 96, 232, 0.3), 0 8px 24px var(--shadow-color);
 }
 
 .errorMessage {
@@ -352,6 +465,7 @@ button:hover::before {
   gap: var(--spacing-md);
 }
 
+/* Enhanced solution controls */
 .solutionControls {
   display: flex;
   align-items: center;
@@ -368,15 +482,17 @@ button:hover::before {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 10px 18px;
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   background: var(--surface-primary);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .moveButton:disabled {
@@ -387,16 +503,36 @@ button:hover::before {
 .moveButton:not(:disabled):hover {
   background: var(--surface-tertiary);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.moveButton:not(:disabled)::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--primary-color);
+  left: 0;
+  bottom: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.moveButton:not(:disabled):hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .moveIndicator {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
-  padding: 4px 12px;
+  padding: 6px 14px;
   background: var(--surface-tertiary);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .showSolutionButton, .nextPuzzleButton {
@@ -420,10 +556,28 @@ button:hover::before {
 
 .nextPuzzleButton {
   background-color: var(--primary-color);
+  position: relative;
+  overflow: hidden;
 }
 
 .nextPuzzleButton:hover {
   background-color: var(--primary-hover);
+}
+
+/* Chess piece icon in button */
+.nextPuzzleButton::before {
+  content: '♞';
+  position: absolute;
+  left: 15px;
+  font-size: 1.2rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.nextPuzzleButton:hover::before {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .progress {
@@ -438,13 +592,31 @@ button:hover::before {
   border-radius: 5px;
   margin: var(--spacing-md) 0;
   overflow: hidden;
+  position: relative;
 }
 
 .progressFill {
   height: 100%;
   background: var(--primary-gradient);
   border-radius: 5px;
-  transition: width 0.3s ease;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Pulsing effect at the progress edge */
+.progressFill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  animation: pulseBrightness 1.5s infinite;
+}
+
+@keyframes pulseBrightness {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
 }
 
 .progressText {
@@ -471,12 +643,39 @@ button:hover::before {
   margin: var(--spacing-lg) 0;
   box-shadow: var(--glass-shadow);
   animation: fadeIn 0.8s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Chess board pattern background on session complete */
+.sessionComplete::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z' fill='%234c51bf' fill-opacity='0.03'/%3E%3C/svg%3E");
+  z-index: -1;
 }
 
 .sessionComplete h1 {
   color: #4c51bf;
   font-size: 2.5rem;
   margin-bottom: var(--spacing-lg);
+  position: relative;
+  display: inline-block;
+}
+
+.sessionComplete h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #4c51bf, transparent);
 }
 
 .sessionComplete p {
@@ -489,6 +688,10 @@ button:hover::before {
   margin-top: var(--spacing-lg);
   font-weight: 600;
   font-size: 1.4rem;
+  background: linear-gradient(135deg, #4c51bf, #6366f1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .customDarkSquareStyle {
@@ -499,12 +702,6 @@ button:hover::before {
   background-color: #edeed1;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-
 .puzzleInfo {
   flex: 1;
   text-align: left;
@@ -512,6 +709,7 @@ button:hover::before {
   min-width: 0;
 }
 
+/* Enhanced timer container */
 .timerContainer {
   padding: var(--spacing-md);
   background: var(--surface-secondary);
@@ -520,6 +718,13 @@ button:hover::before {
   border: 1px solid var(--border-color);
   margin-bottom: var(--spacing-md);
   box-shadow: var(--shadow);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.timerContainer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .timer {
@@ -527,6 +732,9 @@ button:hover::before {
   font-weight: 700;
   color: var(--text-primary);
   margin: var(--spacing-sm) 0;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: -1px;
 }
 
 .timerLabel {
@@ -552,27 +760,37 @@ button:hover::before {
   pointer-events: auto !important;
   will-change: transform;
   position: relative !important;
+  transition: transform 0.1s ease !important;
 }
 
 :global(.piece-417db:active) {
   cursor: grabbing !important;
   z-index: 9999 !important;
+  transform: scale(1.05) !important;
 }
 
 /* Additional square styling */
 :global(.square-55d63) {
   touch-action: none !important;
   -webkit-tap-highlight-color: transparent !important;
+  transition: all 0.15s ease !important;
 }
 
-/* Highlight the possible moves */
+/* Highlight the possible moves with pulsing effect */
 :global(.highlight-square) {
-  box-shadow: inset 0 0 0 3px yellow !important;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 0, 0.7) !important;
+  animation: highlightPulse 1.5s infinite !important;
+}
+
+@keyframes highlightPulse {
+  0%, 100% { box-shadow: inset 0 0 0 3px rgba(255, 255, 0, 0.5) !important; }
+  50% { box-shadow: inset 0 0 0 3px rgba(255, 255, 0, 0.8) !important; }
 }
 
 /* Highlight the selected piece */
 :global(.selected-piece) {
   background-color: rgba(102, 126, 234, 0.4) !important;
+  box-shadow: inset 0 0 0 2px rgba(102, 126, 234, 0.8) !important;
 }
 
 /* Touch-specific overrides for mobile devices */
@@ -767,15 +985,50 @@ button:hover::before {
   flex-direction: column;
   align-items: center;
   color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle chess notation background for timer */
+.solutionTimer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10' y='15' font-family='monospace' font-size='12' opacity='0.07'%3Ee4 e5 Nf3 Nc6%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.1;
+  z-index: 0;
 }
 
 .solutionTimer strong {
   margin-bottom: 4px;
   color: var(--text-secondary);
+  position: relative;
+  z-index: 1;
 }
 
 .solutionTimer span {
   font-size: 2rem;
   font-weight: 700;
   color: var(--primary-color);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Focus mode - temporarily hide non-essential UI when user is making a move */
+.focusMode .sidePanel,
+.focusMode .status:not(:empty),
+.focusMode .controls:not(.active) {
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+}
+
+.focusMode .board {
+  transform: scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 0 2px var(--primary-color, #7160e8);
 }

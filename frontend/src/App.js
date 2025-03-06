@@ -383,6 +383,7 @@ function App() {
           <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
         </div>
       </div>
+      <div className={styles.appTitle}>Chess Research Project</div>
       <div className={styles.headerActions}>
         <ThemeToggle />
         <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
@@ -395,11 +396,6 @@ function App() {
     return (
       <div className={styles.appWrapper}>
         {renderLogoutModal()}
-        <div className={styles.headerBar}>
-          <div className={styles.headerActions}>
-            <ThemeToggle />
-          </div>
-        </div>
         <Login onLoginSuccess={handleLoginSuccess} />
         <LogoFooter />
       </div>
@@ -417,6 +413,7 @@ function App() {
               <span>User: {userInfo.username}</span>
             </div>
           </div>
+          <div className={styles.appTitle}>Chess Research Project</div>
           <div className={styles.headerActions}>
             <ThemeToggle />
             <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
@@ -443,6 +440,7 @@ function App() {
               <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
             </div>
           </div>
+          <div className={styles.appTitle}>Chess Research Project</div>
           <div className={styles.headerActions}>
             <ThemeToggle />
             <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
@@ -542,6 +540,7 @@ function App() {
               <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
             </div>
           </div>
+          <div className={styles.appTitle}>Chess Research Project</div>
           <div className={styles.headerActions}>
             <ThemeToggle />
             <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
@@ -588,6 +587,7 @@ function App() {
               <span>User: {userInfo.username} | Group: {userInfo.groupId} | Session: {userInfo.currentSession}/{MAX_SESSIONS}</span>
             </div>
           </div>
+          <div className={styles.appTitle}>Chess Research Project</div>
           <div className={styles.headerActions}>
             <ThemeToggle />
             <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>

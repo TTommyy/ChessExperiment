@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { loginUser } from '../../api/users';
 import { registerUserInDb, loginUserFromDb } from '../../api/database';
+import ThemeToggle from '../ThemeToggle';
 import styles from './Login.module.css';
 
 const Login = ({ onLoginSuccess }) => {
@@ -109,6 +110,21 @@ const Login = ({ onLoginSuccess }) => {
 
     return (
         <div className={styles.loginContainer}>
+            <div className={styles.kingPiece} aria-hidden="true"></div>
+            <div className={styles.pawnPiece} aria-hidden="true"></div>
+            <div className={styles.knightPiece} aria-hidden="true"></div>
+            <div className={styles.queenPiece} aria-hidden="true"></div>
+            <div className={styles.knightPiece2} aria-hidden="true"></div>
+            <div className={styles.queenPiece2} aria-hidden="true"></div>
+            <div className={styles.rookPiece} aria-hidden="true"></div>
+            <div className={styles.rookPiece2} aria-hidden="true"></div>
+            <div className={styles.rookPiece3} aria-hidden="true"></div>
+            <div className={styles.appTitleContainer}>
+                <h1 className={styles.appTitle}>Chess Research Project</h1>
+                <div className={styles.themeToggleWrapper}>
+                    <ThemeToggle />
+                </div>
+            </div>
             <form onSubmit={handleSubmit} className={styles.loginForm}>
                 <h2>{isRegistering ? 'Register' : 'Login'}</h2>
 
@@ -124,22 +140,33 @@ const Login = ({ onLoginSuccess }) => {
                     </div>
                 )}
 
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    disabled={loading}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={loading}
-                />
+                <div className={styles.inputGroup}>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        disabled={loading}
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        disabled={loading}
+                    />
+                </div>
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Processing...' : isRegistering ? 'Register' : 'Login'}
+                    {loading ? 'Processing...' : (
+                        <>
+                            <svg className={styles.chessIcon} viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M19,22H5V20H19V22M17,10H12V15H7V10H2L12,0L22,10H17M7,15H17V17H7V15Z" fill="white"/>
+                            </svg>
+                            {isRegistering ? 'Register' : 'Login'}
+                        </>
+                    )}
                 </button>
 
                 <div className={styles.switchModeContainer}>
@@ -153,7 +180,7 @@ const Login = ({ onLoginSuccess }) => {
                         className={styles.switchModeButton}
                         disabled={loading}
                     >
-                        {isRegistering ? 'Already have an account? Login' : 'New user? Register'}
+                        {isRegistering ? 'Already have an account? Login' : 'New? Register'}
                     </button>
                 </div>
             </form>

@@ -8,14 +8,18 @@ const path = require('path');
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 5001;
-const JWT_SECRET = 'chess-trainer-jwt-secret-key'; // In production, use environment variable
+const JWT_SECRET = process.env.JWT_SECRET || 'chess-trainer-jwt-secret-key'; // Use env variable in production
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production'
+    ? process.env.ALLOWED_ORIGINS || '*'
+    : '*'
+}));
 app.use(bodyParser.json());
 
-// Connect to SQLite database
-const dbPath = path.join(__dirname, 'chess_exercises.db');
+// Database path - for production, use Azure storage mounted path if available
+const dbPath = process.env.DB_PATH || path.join(__dirname, 'chess_exercises.db');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Database connection error:', err.message);
